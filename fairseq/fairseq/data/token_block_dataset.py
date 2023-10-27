@@ -3,11 +3,13 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+from typing import Tuple
+
 import numpy as np
 import torch
+
 from fairseq.data import FairseqDataset, plasma_utils
 from fairseq.data.indexed_dataset import best_fitting_int_dtype
-from typing import Tuple
 
 
 class TokenBlockDataset(FairseqDataset):
@@ -47,7 +49,6 @@ class TokenBlockDataset(FairseqDataset):
         split_path=None,
         plasma_path=None,
     ):
-
         super().__init__()
         self.dataset = dataset
         self.pad = pad
@@ -69,7 +70,10 @@ class TokenBlockDataset(FairseqDataset):
                 _sizes, split_path, (plasma_id, 1), plasma_path=plasma_path
             )
             self._block_to_dataset_index = plasma_utils.PlasmaView(
-                block_to_dataset_index, split_path, (plasma_id, 2), plasma_path=plasma_path,
+                block_to_dataset_index,
+                split_path,
+                (plasma_id, 2),
+                plasma_path=plasma_path,
             )
         else:
             self._slice_indices = plasma_utils.PlasmaArray(slice_indices)
@@ -85,8 +89,8 @@ class TokenBlockDataset(FairseqDataset):
         """Use token_block_utils_fast to build arrays for indexing into self.dataset"""
         try:
             from fairseq.data.token_block_utils_fast import (
-                _get_slice_indices_fast,
                 _get_block_to_dataset_index_fast,
+                _get_slice_indices_fast,
             )
         except ImportError:
             raise ImportError(
@@ -127,7 +131,8 @@ class TokenBlockDataset(FairseqDataset):
             )
         else:
             block_to_dataset_index = _get_block_to_dataset_index_fast(
-                sizes, slice_indices,
+                sizes,
+                slice_indices,
             )
         size_dtype = np.uint16 if block_size < 65535 else np.uint32
         num_tokens = slice_indices[-1].max()

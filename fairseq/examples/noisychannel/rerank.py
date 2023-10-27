@@ -7,10 +7,6 @@ import math
 from multiprocessing import Pool
 
 import numpy as np
-from fairseq import options
-from fairseq.data import dictionary
-from fairseq.scoring import bleu
-
 from examples.noisychannel import (
     rerank_generate,
     rerank_options,
@@ -19,11 +15,14 @@ from examples.noisychannel import (
     rerank_utils,
 )
 
+from fairseq import options
+from fairseq.data import dictionary
+from fairseq.scoring import bleu
+
 
 def score_target_hypo(
     args, a, b, c, lenpen, target_outfile, hypo_outfile, write_hypos, normalize
 ):
-
     print("lenpen", lenpen, "weight1", a, "weight2", b, "weight3", c)
     gen_output_lst, bitext1_lst, bitext2_lst, lm_res_lst = load_score_files(args)
     dict = dictionary.Dictionary()

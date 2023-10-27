@@ -275,7 +275,8 @@ if __name__ == "__main__":
 
         package_data = {
             "fairseq": (
-                get_files(fairseq_examples) + get_files(os.path.join("fairseq", "config"))
+                get_files(fairseq_examples)
+                + get_files(os.path.join("fairseq", "config"))
             )
         }
         do_setup(package_data)

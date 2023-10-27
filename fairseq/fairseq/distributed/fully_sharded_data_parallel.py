@@ -7,9 +7,9 @@ import contextlib
 from typing import Optional
 
 import torch
+
 from fairseq.dataclass.configs import DistributedTrainingConfig
 from fairseq.distributed import utils as dist_utils
-
 
 try:
     from fairscale.nn.data_parallel import FullyShardedDataParallel as FSDP

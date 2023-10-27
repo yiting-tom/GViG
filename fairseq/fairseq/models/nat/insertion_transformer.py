@@ -6,6 +6,7 @@
 import numpy as np
 import torch
 import torch.nn.functional as F
+
 from fairseq.models import register_model, register_model_architecture
 from fairseq.models.nat import (
     FairseqNATModel,

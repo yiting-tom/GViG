@@ -3,11 +3,12 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-import numpy as np
 import os.path as op
 import re
-from tabulate import tabulate
 from collections import Counter
+
+import numpy as np
+from tabulate import tabulate
 
 
 def comp_purity(p_xy, axis):

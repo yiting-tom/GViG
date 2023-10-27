@@ -5,9 +5,9 @@
 
 import os
 
-from fairseq import options
-
 from examples.noisychannel import rerank_options, rerank_utils
+
+from fairseq import options
 
 
 def score_lm(args):

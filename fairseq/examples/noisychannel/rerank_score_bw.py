@@ -6,10 +6,10 @@
 import os
 from contextlib import redirect_stdout
 
-from fairseq import options
+from examples.noisychannel import rerank_options, rerank_utils
 from fairseq_cli import generate
 
-from examples.noisychannel import rerank_options, rerank_utils
+from fairseq import options
 
 
 def score_bw(args):

@@ -11,24 +11,24 @@ import logging
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
 from fairseq import utils
 from fairseq.model_parallel.models.transformer import ModelParallelTransformerEncoder
 from fairseq.models import register_model, register_model_architecture
 from fairseq.models.roberta import (
-    roberta_base_architecture,
-    roberta_prenorm_architecture,
     RobertaEncoder,
     RobertaModel,
+    roberta_base_architecture,
+    roberta_prenorm_architecture,
 )
 from fairseq.modules import LayerNorm
 
-
 try:
     from fairseq.model_parallel.megatron.mpu import (
-        copy_to_model_parallel_region,
-        gather_from_model_parallel_region,
         ColumnParallelLinear,
         VocabParallelEmbedding,
+        copy_to_model_parallel_region,
+        gather_from_model_parallel_region,
     )
 
     has_megatron_submodule = True

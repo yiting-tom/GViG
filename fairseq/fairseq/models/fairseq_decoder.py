@@ -6,8 +6,9 @@
 from typing import Dict, List, Optional, Tuple
 
 import torch.nn as nn
-from fairseq import utils
 from torch import Tensor
+
+from fairseq import utils
 
 
 class FairseqDecoder(nn.Module):
@@ -18,7 +19,6 @@ class FairseqDecoder(nn.Module):
         self.dictionary = dictionary
         self.onnx_trace = False
         self.adaptive_softmax = None
-
 
     def forward(self, prev_output_tokens, encoder_out=None, **kwargs):
         """

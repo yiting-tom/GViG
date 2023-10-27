@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Callable, List, Optional, Union
 
 import torch
+
 from fairseq import utils
 from fairseq.data.indexed_dataset import get_available_dataset_impl
 from fairseq.dataclass.configs import (
@@ -16,11 +17,11 @@ from fairseq.dataclass.configs import (
     CommonEvalConfig,
     DatasetConfig,
     DistributedTrainingConfig,
+    EMAConfig,
     EvalLMConfig,
     GenerationConfig,
     InteractiveConfig,
     OptimizationConfig,
-    EMAConfig,
 )
 from fairseq.dataclass.utils import gen_parser_from_dataclass
 
@@ -119,7 +120,7 @@ def parse_args_and_arch(
             **{k: v for k, v in vars(args).items() if v is not None}
         )
 
-    from fairseq.models import ARCH_MODEL_REGISTRY, ARCH_CONFIG_REGISTRY, MODEL_REGISTRY
+    from fairseq.models import ARCH_CONFIG_REGISTRY, ARCH_MODEL_REGISTRY, MODEL_REGISTRY
 
     # Before creating the true parser, we need to import optional user module
     # in order to eagerly import custom tasks, optimizers, architectures, etc.

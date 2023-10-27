@@ -18,10 +18,10 @@ import subprocess
 from pathlib import Path
 
 import pandas as pd
-
-from configs import paths
 from generate_wsdm_vqa_data import RESULT_COLUMNS as VQA_COLUMNS
 from generate_wsdm_vqa_data import VQA_DATASET_PATH_FMT
+
+from configs import paths
 
 L: logging.Logger = logging.getLogger(logging.basicConfig(level=logging.INFO))
 VG_DATASET_PATH_FMT = str(

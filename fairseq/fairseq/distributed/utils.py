@@ -11,18 +11,19 @@ import random
 import socket
 import struct
 import subprocess
+import sys
+import time
 import warnings
 from argparse import Namespace
 from collections import OrderedDict
 from dataclasses import dataclass
 from typing import Any, Dict, List, Mapping, Optional
-import sys
-import time
 
 import torch
 import torch.distributed as dist
-from fairseq.dataclass.configs import DistributedTrainingConfig, FairseqConfig
 from omegaconf import open_dict
+
+from fairseq.dataclass.configs import DistributedTrainingConfig, FairseqConfig
 
 try:
     import torch_xla.core.xla_model as xm
@@ -203,9 +204,7 @@ def _pipeline_parallel_post_init(
         # distributed_world_size to be based on the total number of GPUs, so
         # we need to correct them to be based on the number of pipelines.
         assert cfg.distributed_world_size % num_pipeline_devices == 0
-        cfg.distributed_world_size = (
-            cfg.distributed_world_size // num_pipeline_devices
-        )
+        cfg.distributed_world_size = cfg.distributed_world_size // num_pipeline_devices
         # In the case of 4-way MP on nodes with 8 GPUs, we want
         # distributed_rank to be the starting GPU index for each pipeline
         # i.e., 0, 2, ...
@@ -258,7 +257,7 @@ def distributed_init(cfg: FairseqConfig):
                     cfg.distributed_training.distributed_init_method,
                 )
             )
-            logger.info('Start init')
+            logger.info("Start init")
             max_time_wait = 600
             for i in range(max_time_wait):
                 try:
@@ -279,15 +278,21 @@ def distributed_init(cfg: FairseqConfig):
                         break
                 except ValueError:
                     # This is caused by TCPStore failure.
-                    print('Retry: {}, with value error {}'.format(
-                        i + 1, sys.exc_info()[0]))
+                    print(
+                        "Retry: {}, with value error {}".format(
+                            i + 1, sys.exc_info()[0]
+                        )
+                    )
                     time.sleep(5)
                     if i == max_time_wait - 1:
-                        print('k8s resource wait too long time')
+                        print("k8s resource wait too long time")
                         exit(-1)
                 except Exception:
-                    print('Retry: {}, with value error {}'.format(
-                        i + 1, sys.exc_info()[0]))
+                    print(
+                        "Retry: {}, with value error {}".format(
+                            i + 1, sys.exc_info()[0]
+                        )
+                    )
                     exit(-1)
             # perform a dummy all-reduce to initialize the NCCL communicator
             if torch.cuda.is_available():
@@ -326,8 +331,10 @@ def distributed_init(cfg: FairseqConfig):
         model_part_number = get_model_parallel_rank()
         cfg.checkpoint.checkpoint_suffix += "-model_part-{0}".format(model_part_number)
 
-    if hasattr(cfg,  "model") and getattr(cfg.model, "base_layers", 0) > 0:
-        cfg.checkpoint.checkpoint_suffix = f"-rank-{cfg.distributed_training.distributed_rank}"
+    if hasattr(cfg, "model") and getattr(cfg.model, "base_layers", 0) > 0:
+        cfg.checkpoint.checkpoint_suffix = (
+            f"-rank-{cfg.distributed_training.distributed_rank}"
+        )
 
     return cfg.distributed_training.distributed_rank
 
@@ -717,7 +724,7 @@ def broadcast_tensors(
             dist_device = torch.device("cpu")
 
     # share metadata first to simplify transfer
-    is_src_rank = (get_rank(group) == src_rank)
+    is_src_rank = get_rank(group) == src_rank
     if is_src_rank:
         metadata = [
             {"size": t.size(), "dtype": t.dtype, "device": t.device} for t in tensors
@@ -768,7 +775,10 @@ def broadcast_object(
 
 
 def _broadcast_object_slow(
-    obj: Any, src_rank: int, group: object, dist_device: torch.device,
+    obj: Any,
+    src_rank: int,
+    group: object,
+    dist_device: torch.device,
 ) -> Any:
     if get_rank(group) == src_rank:
         # Emit data

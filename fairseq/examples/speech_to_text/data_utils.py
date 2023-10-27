@@ -4,27 +4,27 @@
 # LICENSE file in the root directory of this source tree.
 
 import csv
-from pathlib import Path
+import io
 import zipfile
 from functools import reduce
 from multiprocessing import cpu_count
+from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
-import io
 
 import numpy as np
 import pandas as pd
 import sentencepiece as sp
+import soundfile as sf
+import torch
+from tqdm import tqdm
+
 from fairseq.data.audio.audio_utils import (
-    convert_waveform,
     _get_kaldi_fbank,
     _get_torchaudio_fbank,
+    convert_waveform,
     is_npy_data,
     is_sf_audio_data,
 )
-import torch
-import soundfile as sf
-from tqdm import tqdm
-
 
 UNK_TOKEN, UNK_TOKEN_ID = "<unk>", 3
 BOS_TOKEN, BOS_TOKEN_ID = "<s>", 0

@@ -4,14 +4,14 @@
 # LICENSE file in the root directory of this source tree.
 
 import logging
+
 from fairseq.tasks import register_task
 from fairseq.tasks.speech_to_text import SpeechToTextTask
-from fairseq.tasks.translation import (
-    TranslationTask, TranslationConfig
-)
+from fairseq.tasks.translation import TranslationConfig, TranslationTask
 
 try:
-    import examples.simultaneous_translation # noqa
+    import examples.simultaneous_translation  # noqa
+
     import_successful = True
 except BaseException:
     import_successful = False
@@ -35,7 +35,7 @@ class SimulSpeechToTextTask(SpeechToTextTask):
         super().__init__(args, tgt_dict)
 
 
-@register_task("simul_text_to_text",  dataclass=TranslationConfig)
+@register_task("simul_text_to_text", dataclass=TranslationConfig)
 class SimulTextToTextTask(TranslationTask):
     def __init__(self, cfg, src_dict, tgt_dict):
         check_import(import_successful)

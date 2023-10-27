@@ -11,6 +11,7 @@ import logging
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
 from fairseq import utils
 from fairseq.models import (
     FairseqEncoder,
@@ -25,7 +26,6 @@ from fairseq.modules.transformer_sentence_encoder import init_bert_params
 from fairseq.utils import safe_getattr, safe_hasattr
 
 from .hub_interface import RobertaHubInterface
-
 
 logger = logging.getLogger(__name__)
 
@@ -183,7 +183,7 @@ class RobertaModel(FairseqEncoderModel):
                 "communication less efficient due to smaller input sizes. This option "
                 "is set to 0 (i.e., always wrap) when --checkpoint-activations or "
                 "--offload-activations are passed."
-            )
+            ),
         )
 
     @classmethod
@@ -542,7 +542,9 @@ def base_architecture(args):
     args.layernorm_embedding = safe_getattr(args, "layernorm_embedding", True)
     args.no_scale_embedding = safe_getattr(args, "no_scale_embedding", True)
     args.activation_fn = safe_getattr(args, "activation_fn", "gelu")
-    args.encoder_normalize_before = safe_getattr(args, "encoder_normalize_before", False)
+    args.encoder_normalize_before = safe_getattr(
+        args, "encoder_normalize_before", False
+    )
     args.pooler_activation_fn = safe_getattr(args, "pooler_activation_fn", "tanh")
     args.untie_weights_roberta = safe_getattr(args, "untie_weights_roberta", False)
 

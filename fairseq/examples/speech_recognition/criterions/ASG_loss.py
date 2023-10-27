@@ -7,6 +7,7 @@
 
 import torch
 from examples.speech_recognition.data.replabels import pack_replabels
+
 from fairseq import utils
 from fairseq.criterions import FairseqCriterion, register_criterion
 

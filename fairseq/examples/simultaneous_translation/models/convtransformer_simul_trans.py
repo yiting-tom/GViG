@@ -5,24 +5,22 @@
 # the root directory of this source tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
+from typing import Dict, List
+
+from torch import Tensor, nn
+
 from fairseq import checkpoint_utils
-from fairseq.models import (
-    register_model,
-    register_model_architecture,
-)
+from fairseq.models import register_model, register_model_architecture
 from fairseq.models.speech_to_text import (
+    ConvTransformerEncoder,
     ConvTransformerModel,
     convtransformer_espnet,
-    ConvTransformerEncoder,
 )
 from fairseq.models.speech_to_text.modules.augmented_memory_attention import (
-    augmented_memory,
-    SequenceEncoder,
     AugmentedMemoryConvTransformerEncoder,
+    SequenceEncoder,
+    augmented_memory,
 )
-
-from torch import nn, Tensor
-from typing import Dict, List
 from fairseq.models.speech_to_text.modules.emformer import (
     NoSegAugmentedMemoryTransformerEncoderLayer,
 )

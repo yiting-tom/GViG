@@ -5,38 +5,39 @@
 
 
 from pathlib import Path
-from typing import BinaryIO, Optional, Tuple, Union, List
+from typing import BinaryIO, List, Optional, Tuple, Union
 
 import numpy as np
 import torch
 import torch.nn.functional as F
-
 
 SF_AUDIO_FILE_EXTENSIONS = {".wav", ".flac", ".ogg"}
 FEATURE_OR_SF_AUDIO_FILE_EXTENSIONS = {".npy", ".wav", ".flac", ".ogg"}
 
 
 def convert_waveform(
-        waveform: Union[np.ndarray, torch.Tensor], sample_rate: int,
-        normalize_volume: bool = False, to_mono: bool = False,
-        to_sample_rate: Optional[int] = None
+    waveform: Union[np.ndarray, torch.Tensor],
+    sample_rate: int,
+    normalize_volume: bool = False,
+    to_mono: bool = False,
+    to_sample_rate: Optional[int] = None,
 ) -> Tuple[Union[np.ndarray, torch.Tensor], int]:
     """convert a waveform:
-        - to a target sample rate
-        - from multi-channel to mono channel
-        - volume normalization
+    - to a target sample rate
+    - from multi-channel to mono channel
+    - volume normalization
 
-        Args:
-            waveform (numpy.ndarray or torch.Tensor): 2D original waveform
-                (channels x length)
-            sample_rate (int): original sample rate
-            normalize_volume (bool): perform volume normalization
-            to_mono (bool): convert to mono channel if having multiple channels
-            to_sample_rate (Optional[int]): target sample rate
-        Returns:
-            waveform (numpy.ndarray): converted 2D waveform (channels x length)
-            sample_rate (float): target sample rate
-        """
+    Args:
+        waveform (numpy.ndarray or torch.Tensor): 2D original waveform
+            (channels x length)
+        sample_rate (int): original sample rate
+        normalize_volume (bool): perform volume normalization
+        to_mono (bool): convert to mono channel if having multiple channels
+        to_sample_rate (Optional[int]): target sample rate
+    Returns:
+        waveform (numpy.ndarray): converted 2D waveform (channels x length)
+        sample_rate (float): target sample rate
+    """
     try:
         import torchaudio.sox_effects as ta_sox
     except ImportError:
@@ -62,10 +63,14 @@ def convert_waveform(
 
 
 def get_waveform(
-        path_or_fp: Union[str, BinaryIO], normalization: bool = True,
-        mono: bool = True, frames: int = -1, start: int = 0,
-        always_2d: bool = True, output_sample_rate: Optional[int] = None,
-        normalize_volume: bool = False
+    path_or_fp: Union[str, BinaryIO],
+    normalization: bool = True,
+    mono: bool = True,
+    frames: int = -1,
+    start: int = 0,
+    always_2d: bool = True,
+    output_sample_rate: Optional[int] = None,
+    normalize_volume: bool = False,
 ) -> Tuple[np.ndarray, int]:
     """Get the waveform and sample rate of a 16-bit WAV/FLAC/OGG Vorbis audio.
 
@@ -97,12 +102,15 @@ def get_waveform(
     )
     waveform = waveform.T  # T x C -> C x T
     waveform, sample_rate = convert_waveform(
-        waveform, sample_rate, normalize_volume=normalize_volume, to_mono=mono,
-        to_sample_rate=output_sample_rate
+        waveform,
+        sample_rate,
+        normalize_volume=normalize_volume,
+        to_mono=mono,
+        to_sample_rate=output_sample_rate,
     )
 
     if not normalization:
-        waveform *= 2 ** 15  # denormalized to 16-bit signed integers
+        waveform *= 2**15  # denormalized to 16-bit signed integers
     if not always_2d:
         waveform = waveform.squeeze(axis=0)
     return waveform, sample_rate
@@ -113,7 +121,7 @@ def _get_kaldi_fbank(
 ) -> Optional[np.ndarray]:
     """Get mel-filter bank features via PyKaldi."""
     try:
-        from kaldi.feat.fbank import FbankOptions, Fbank
+        from kaldi.feat.fbank import Fbank, FbankOptions
         from kaldi.feat.mel import MelBanksOptions
         from kaldi.feat.window import FrameExtractionOptions
         from kaldi.matrix import Vector
@@ -210,9 +218,7 @@ def parse_path(path: str) -> Tuple[str, List[int]]:
     return _path, slice_ptr
 
 
-def get_window(
-        window_fn: callable, n_fft: int, win_length: int
-) -> torch.Tensor:
+def get_window(window_fn: callable, n_fft: int, win_length: int) -> torch.Tensor:
     padding = n_fft - win_length
     assert padding >= 0
     return F.pad(window_fn(win_length), (padding // 2, padding - padding // 2))
@@ -221,13 +227,13 @@ def get_window(
 def get_fourier_basis(n_fft: int) -> torch.Tensor:
     basis = np.fft.fft(np.eye(n_fft))
     basis = np.vstack(
-        [np.real(basis[:n_fft // 2 + 1, :]), np.imag(basis[:n_fft // 2 + 1, :])]
+        [np.real(basis[: n_fft // 2 + 1, :]), np.imag(basis[: n_fft // 2 + 1, :])]
     )
     return torch.from_numpy(basis).float()
 
 
 def get_mel_filters(
-        sample_rate: int, n_fft: int, n_mels: int, f_min: float, f_max: float
+    sample_rate: int, n_fft: int, n_mels: int, f_min: float, f_max: float
 ) -> torch.Tensor:
     try:
         import librosa
@@ -239,8 +245,12 @@ def get_mel_filters(
 
 class TTSSpectrogram(torch.nn.Module):
     def __init__(
-            self, n_fft: int, win_length: int, hop_length: int,
-            window_fn: callable = torch.hann_window, return_phase: bool = False
+        self,
+        n_fft: int,
+        win_length: int,
+        hop_length: int,
+        window_fn: callable = torch.hann_window,
+        return_phase: bool = False,
     ) -> None:
         super(TTSSpectrogram, self).__init__()
         self.n_fft = n_fft
@@ -249,17 +259,17 @@ class TTSSpectrogram(torch.nn.Module):
 
         basis = get_fourier_basis(n_fft).unsqueeze(1)
         basis *= get_window(window_fn, n_fft, win_length)
-        self.register_buffer('basis', basis)
+        self.register_buffer("basis", basis)
 
     def forward(
-            self, waveform: torch.Tensor
+        self, waveform: torch.Tensor
     ) -> Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]:
         padding = (self.n_fft // 2, self.n_fft // 2)
-        x = F.pad(waveform.unsqueeze(1), padding, mode='reflect')
+        x = F.pad(waveform.unsqueeze(1), padding, mode="reflect")
         x = F.conv1d(x, self.basis, stride=self.hop_length)
-        real_part = x[:, :self.n_fft // 2 + 1, :]
-        imag_part = x[:, self.n_fft // 2 + 1:, :]
-        magnitude = torch.sqrt(real_part ** 2 + imag_part ** 2)
+        real_part = x[:, : self.n_fft // 2 + 1, :]
+        imag_part = x[:, self.n_fft // 2 + 1 :, :]
+        magnitude = torch.sqrt(real_part**2 + imag_part**2)
         if self.return_phase:
             phase = torch.atan2(imag_part, real_part)
             return magnitude, phase
@@ -268,13 +278,11 @@ class TTSSpectrogram(torch.nn.Module):
 
 class TTSMelScale(torch.nn.Module):
     def __init__(
-            self, n_mels: int, sample_rate: int, f_min: float, f_max: float,
-            n_stft: int
+        self, n_mels: int, sample_rate: int, f_min: float, f_max: float, n_stft: int
     ) -> None:
         super(TTSMelScale, self).__init__()
-        basis = get_mel_filters(sample_rate, (n_stft - 1) * 2, n_mels, f_min,
-                                f_max)
-        self.register_buffer('basis', basis)
+        basis = get_mel_filters(sample_rate, (n_stft - 1) * 2, n_mels, f_min, f_max)
+        self.register_buffer("basis", basis)
 
     def forward(self, specgram: torch.Tensor) -> torch.Tensor:
         return torch.matmul(self.basis, specgram)

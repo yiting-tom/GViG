@@ -9,6 +9,7 @@ from collections import OrderedDict
 from typing import Dict, List
 
 import numpy as np
+
 from fairseq.data import data_utils
 
 from . import FairseqDataset
@@ -74,13 +75,14 @@ class MultiCorpusDataset(FairseqDataset):
     def ordered_indices(self):
         start = time.time()
         with data_utils.numpy_seed(self.seed, self.epoch):
-            logger.info(f"sampling new dataset with seed {self.seed} epoch {self.epoch}")
+            logger.info(
+                f"sampling new dataset with seed {self.seed} epoch {self.epoch}"
+            )
             sampled_indices = []
             num_selected_instances = 0
 
             # For each dataset i, sample self.distribution[i] * self.total_num_instances
             for i, key in enumerate(self.datasets):
-
                 if i < len(self.datasets) - 1:
                     num_instances = int(self.distribution[i] * self.total_num_instances)
                     high = self.dataset_offsets[i + 1]

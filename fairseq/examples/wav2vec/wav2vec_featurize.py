@@ -18,8 +18,9 @@ import numpy as np
 import soundfile as sf
 import torch
 import tqdm
-import fairseq
 from torch import nn
+
+import fairseq
 
 
 def read_audio(fname):

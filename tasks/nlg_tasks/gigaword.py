@@ -5,10 +5,9 @@ from argparse import Namespace
 from dataclasses import dataclass, field
 from typing import Optional
 
-from datasets import load_metric
-
 from data.file_dataset import FileDataset
 from data.nlg_data.summary_dataset import SummaryDataset
+from datasets import load_metric
 from fairseq import metrics
 from fairseq.data import encoders
 from fairseq.tasks import register_task

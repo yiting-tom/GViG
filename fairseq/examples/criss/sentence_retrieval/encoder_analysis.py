@@ -8,7 +8,6 @@ import glob
 
 import numpy as np
 
-
 DIM = 1024
 
 

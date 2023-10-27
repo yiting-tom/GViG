@@ -1,8 +1,7 @@
 # %%
 import pandas as pd
-from wsdm_data.utils import img_formatter
-
 from generate_wsdm_vg_data import RESULT_COLUMNS
+from wsdm_data.utils import img_formatter
 
 # %%
 train = pd.read_csv(

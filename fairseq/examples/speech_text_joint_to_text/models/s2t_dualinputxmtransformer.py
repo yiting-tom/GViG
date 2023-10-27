@@ -6,27 +6,23 @@
 import copy
 
 import torch.nn as nn
-from fairseq import checkpoint_utils
-from fairseq import utils
+
+from fairseq import checkpoint_utils, utils
 from fairseq.data.data_utils import lengths_to_padding_mask
-from fairseq.models import (
-    register_model,
-    register_model_architecture,
-    FairseqEncoder,
-)
-from fairseq.models.speech_to_text import XMTransformerModel, Wav2VecEncoderWithAdaptor
+from fairseq.models import FairseqEncoder, register_model, register_model_architecture
+from fairseq.models.speech_to_text import Wav2VecEncoderWithAdaptor, XMTransformerModel
 from fairseq.models.speech_to_text.xm_transformer import (
     set_default_adaptor_args,
     set_default_w2v_encoder_args,
 )
-from fairseq.models.transformer import TransformerEncoder, TransformerDecoder
+from fairseq.models.transformer import TransformerDecoder, TransformerEncoder
 from fairseq.models.wav2vec import TransformerSentenceEncoderLayer
 from fairseq.utils import safe_hasattr
 
 from .s2t_dualinputtransformer import (
+    DualInputEncoder,
     DualInputS2TTransformerModel,
     TransformerMultiInputDecoder,
-    DualInputEncoder,
 )
 
 

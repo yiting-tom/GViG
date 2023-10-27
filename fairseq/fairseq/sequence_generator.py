@@ -4,15 +4,16 @@
 # LICENSE file in the root directory of this source tree.
 
 import math
-from typing import Dict, List, Optional
 import sys
+from typing import Dict, List, Optional
 
 import torch
 import torch.nn as nn
+from torch import Tensor
+
 from fairseq import search, utils
 from fairseq.data import data_utils
 from fairseq.models import FairseqIncrementalDecoder
-from torch import Tensor
 from fairseq.ngram_repeat_block import NGramRepeatBlock
 
 

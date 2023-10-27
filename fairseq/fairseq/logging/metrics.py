@@ -18,7 +18,6 @@ from typing import Callable, List, Optional
 
 from .meters import *
 
-
 # Aggregation contexts are considered "active" when inside the scope
 # created by the :func:`aggregate` context manager.
 _aggregators = OrderedDict()
@@ -129,6 +128,7 @@ def log_scalar(
         if key not in agg:
             agg.add_meter(key, AverageMeter(round=round), priority)
         agg[key].update(value, weight)
+
 
 def log_scalar_sum(
     key: str,
@@ -309,6 +309,7 @@ def load_state_dict(state_dict):
 def xla_metrics_report():
     try:
         import torch_xla.debug.metrics as met
+
         print(met.metrics_report())
     except ImportError:
         return

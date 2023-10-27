@@ -14,6 +14,7 @@ from typing import List
 
 import numpy as np
 import torch
+
 from fairseq.data import FairseqDataset, data_utils
 from fairseq.distributed import utils as distributed_utils
 
@@ -255,7 +256,7 @@ class SampledMultiDataset(FairseqDataset):
             return None
         if self.collate_format == "ordered_dict":
             collect_samples = [[] for _ in range(len(self.datasets))]
-            for (i, sample) in samples:
+            for i, sample in samples:
                 collect_samples[i].append(sample)
             batch = OrderedDict(
                 [
@@ -406,8 +407,8 @@ class SampledMultiDataset(FairseqDataset):
                     ).hexdigest(),
                     16,
                 )
-                % (2 ** 32),
-                self.seed % (2 ** 32),  # global seed
+                % (2**32),
+                self.seed % (2**32),  # global seed
                 self._cur_epoch,  # epoch index,
             ]
         )

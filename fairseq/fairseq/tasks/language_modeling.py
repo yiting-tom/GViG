@@ -10,6 +10,8 @@ from typing import Optional
 
 import numpy as np
 import torch
+from omegaconf import II
+
 from fairseq import utils
 from fairseq.data import (
     AppendTokenDataset,
@@ -30,8 +32,6 @@ from fairseq.data.indexed_dataset import get_available_dataset_impl
 from fairseq.data.shorten_dataset import maybe_shorten_dataset
 from fairseq.dataclass import ChoiceEnum, FairseqDataclass
 from fairseq.tasks import LegacyFairseqTask, register_task
-from omegaconf import II
-
 
 SAMPLE_BREAK_MODE_CHOICES = ChoiceEnum(["none", "complete", "complete_doc", "eos"])
 SHORTEN_METHOD_CHOICES = ChoiceEnum(["none", "truncate", "random_crop"])

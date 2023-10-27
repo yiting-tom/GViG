@@ -5,15 +5,15 @@
 # LICENSE file in the root directory of this source tree.
 
 import argparse
+import math
 import os
 import os.path as osp
-import math
-import numpy as np
-import tqdm
-import torch
-import torch.nn.functional as F
 from shutil import copyfile
 
+import numpy as np
+import torch
+import torch.nn.functional as F
+import tqdm
 from npy_append_array import NpyAppendArray
 
 

@@ -4,6 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 
 from dataclasses import dataclass
+
 from fairseq.data.legacy.masked_lm_dictionary import MaskedLMDictionary
 from fairseq.tasks.translation import TranslationConfig, TranslationTask
 

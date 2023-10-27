@@ -9,6 +9,7 @@ import sys
 from dataclasses import dataclass, field
 
 import torch
+
 from fairseq.dataclass import FairseqDataclass
 from fairseq.scoring import BaseScorer, register_scorer
 from fairseq.scoring.tokenizer import EvaluationTokenizer

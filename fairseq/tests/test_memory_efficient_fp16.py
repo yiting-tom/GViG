@@ -8,9 +8,10 @@ import logging
 import unittest
 
 import torch
+from omegaconf import OmegaConf
+
 from fairseq.optim.adam import FairseqAdam
 from fairseq.optim.fp16_optimizer import MemoryEfficientFP16Optimizer
-from omegaconf import OmegaConf
 
 
 @unittest.skipIf(not torch.cuda.is_available(), "test requires a GPU")

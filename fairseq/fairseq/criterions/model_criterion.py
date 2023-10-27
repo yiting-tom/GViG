@@ -11,7 +11,6 @@ from fairseq import metrics, utils
 from fairseq.criterions import FairseqCriterion, register_criterion
 from fairseq.dataclass import FairseqDataclass
 
-
 logger = logging.getLogger(__name__)
 
 

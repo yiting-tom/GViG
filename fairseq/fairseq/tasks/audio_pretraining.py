@@ -8,18 +8,17 @@
 import logging
 import os
 import sys
-
 from argparse import Namespace
 from dataclasses import dataclass, field
 from typing import Optional
-from omegaconf import MISSING, II, OmegaConf
+
+from omegaconf import II, MISSING, OmegaConf
 
 from fairseq.data import BinarizedAudioDataset, FileAudioDataset
-from fairseq.dataclass import FairseqDataclass, ChoiceEnum
 from fairseq.data.text_compressor import TextCompressionLevel
+from fairseq.dataclass import ChoiceEnum, FairseqDataclass
 
 from . import FairseqTask, register_task
-
 
 logger = logging.getLogger(__name__)
 
@@ -50,8 +49,7 @@ class AudioPretrainingConfig(FairseqDataclass):
     data: str = field(default=MISSING, metadata={"help": "path to data directory"})
     labels: Optional[str] = field(
         default=None,
-        metadata={
-            "help": "extension of the label file to load, used for fine-tuning"},
+        metadata={"help": "extension of the label file to load, used for fine-tuning"},
     )
     binarized_dataset: bool = field(
         default=False,
@@ -102,8 +100,8 @@ class AudioPretrainingConfig(FairseqDataclass):
         default="none",
         metadata={
             "help": "compression level for texts (e.g. audio filenames, "
-                    "target texts): none/low/high (default: none). "
-        }
+            "target texts): none/low/high (default: none). "
+        },
     )
 
 

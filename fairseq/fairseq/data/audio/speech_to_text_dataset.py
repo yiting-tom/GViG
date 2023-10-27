@@ -8,31 +8,26 @@ import io
 import logging
 import re
 from collections import defaultdict
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional
-from dataclasses import dataclass
 
 import numpy as np
 import torch
-from fairseq.data import (
-    ConcatDataset,
-    Dictionary,
-    FairseqDataset,
-    ResamplingDataset,
-    data_utils as fairseq_data_utils,
-)
+
+from fairseq.data import ConcatDataset, Dictionary, FairseqDataset, ResamplingDataset
+from fairseq.data import data_utils as fairseq_data_utils
 from fairseq.data.audio.audio_utils import (
+    FEATURE_OR_SF_AUDIO_FILE_EXTENSIONS,
     get_fbank,
     get_waveform,
-    read_from_stored_zip,
     is_npy_data,
     is_sf_audio_data,
     parse_path,
-    FEATURE_OR_SF_AUDIO_FILE_EXTENSIONS,
+    read_from_stored_zip,
 )
-from fairseq.data.audio.feature_transforms import CompositeAudioFeatureTransform
 from fairseq.data.audio.data_cfg import S2TDataConfig
-
+from fairseq.data.audio.feature_transforms import CompositeAudioFeatureTransform
 
 logger = logging.getLogger(__name__)
 

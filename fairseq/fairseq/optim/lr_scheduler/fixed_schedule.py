@@ -4,7 +4,8 @@
 # LICENSE file in the root directory of this source tree.
 
 from dataclasses import dataclass, field
-from typing import Optional, List
+from typing import List, Optional
+
 from omegaconf import II
 
 from fairseq.dataclass import FairseqDataclass

@@ -21,13 +21,16 @@ display_exp_settings() {
 }
 
 # Basic Settings
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=0,1
+export LOCAL_RANK=0
+export MASTER_PORT=6033
+export GPUS_PER_NODE=2
 
 # Experiment Settings
-exp_tag=base # experiment tag
-arch=tiny    # model architecture(define in pretrained_weights folder, e.g. huge, large, base, medium, base, tiny)
-trainP=1     # training prompt id
-valP=1       # validation prompt id
+exp_tag=sample 		# experiment tag
+arch=tiny    		# model architecture(define in pretrained_weights folder, e.g. huge, large, base, medium, base, tiny)
+trainP=1     		# training prompt id
+valP=1       		# validation prompt id
 
 # Hyperparameter Settings
 criterion=adjust_label_smoothed_cross_entropy
@@ -53,9 +56,7 @@ patch_image_size=512
 
 # Basic Settings
 root=$(dirname "$(dirname "$(readlink -f "$0")")")
-IFS=',' read -ra device_count <<<"$a"
-export MASTER_PORT=6033
-export GPUS_PER_NODE=${#device_count[@]}
+
 task=wsdm_vqa
 selected_cols=0,4,2,3
 

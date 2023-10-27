@@ -6,6 +6,8 @@
 import logging
 import os
 
+import numpy as np
+
 from fairseq import utils
 from fairseq.data import (
     AppendTokenDataset,
@@ -23,8 +25,6 @@ from fairseq.data import (
 from fairseq.data.encoders.utils import get_whole_word_mask
 from fairseq.data.shorten_dataset import maybe_shorten_dataset
 from fairseq.tasks import LegacyFairseqTask, register_task
-import numpy as np
-
 
 logger = logging.getLogger(__name__)
 
@@ -134,7 +134,6 @@ class DenoisingTask(LegacyFairseqTask):
             help="comma-separated list of dataset splits to apply shortening to, "
             'e.g., "train,valid" (default: all dataset splits)',
         )
-
 
     def __init__(self, args, dictionary):
         super().__init__(args)

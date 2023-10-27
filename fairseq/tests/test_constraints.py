@@ -7,6 +7,7 @@ import sys
 import unittest
 
 import torch
+
 from fairseq.token_generation_constraints import *
 
 

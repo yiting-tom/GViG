@@ -20,7 +20,6 @@ from functools import partial, wraps
 from hashlib import sha256
 from io import open
 
-
 try:
     from torch.hub import _get_torch_home
 
@@ -146,6 +145,7 @@ def cached_path_from_pm(url_or_filename):
     """
     try:
         from fairseq.file_io import PathManager
+
         local_path = PathManager.get_local_path(url_or_filename)
         return local_path
     except Exception:

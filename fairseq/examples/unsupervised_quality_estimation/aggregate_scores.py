@@ -8,7 +8,6 @@ import sys
 
 import numpy as np
 
-
 aggregate_funcs = {
     "std": np.std,
     "var": np.var,

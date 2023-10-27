@@ -10,6 +10,7 @@ import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
 from fairseq import checkpoint_utils
 from fairseq.incremental_decoding_utils import with_incremental_state
 from fairseq.models import (
@@ -28,7 +29,6 @@ from fairseq.modules import (
     LearnedPositionalEmbedding,
     LinearizedConvolution,
 )
-
 
 logger = logging.getLogger(__name__)
 

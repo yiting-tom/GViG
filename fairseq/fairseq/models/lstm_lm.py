@@ -11,7 +11,6 @@ from fairseq.models import (
 )
 from fairseq.models.lstm import Embedding, LSTMDecoder
 
-
 DEFAULT_MAX_TARGET_POSITIONS = 1e5
 
 

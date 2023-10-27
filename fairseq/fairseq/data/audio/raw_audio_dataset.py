@@ -4,24 +4,24 @@
 # LICENSE file in the root directory of this source tree.
 
 
+import io
 import logging
 import os
 import sys
-import io
 
 import numpy as np
 import torch
 import torch.nn.functional as F
 
-from .. import FairseqDataset
-from ..data_utils import compute_mask_indices, get_buckets, get_bucketed_sizes
 from fairseq.data.audio.audio_utils import (
+    is_sf_audio_data,
     parse_path,
     read_from_stored_zip,
-    is_sf_audio_data,
 )
-from fairseq.data.text_compressor import TextCompressor, TextCompressionLevel
+from fairseq.data.text_compressor import TextCompressionLevel, TextCompressor
 
+from .. import FairseqDataset
+from ..data_utils import compute_mask_indices, get_bucketed_sizes, get_buckets
 
 logger = logging.getLogger(__name__)
 
@@ -192,7 +192,7 @@ class RawAudioDataset(FairseqDataset):
     def _get_mask_indices_dims(self, size, padding=0, dilation=1):
         if size not in self._features_size_map:
             L_in = size
-            for (_, kernel_size, stride) in self._conv_feature_layers:
+            for _, kernel_size, stride in self._conv_feature_layers:
                 L_out = L_in + 2 * padding - dilation * (kernel_size - 1) - 1
                 L_out = 1 + L_out // stride
                 L_in = L_out
@@ -308,6 +308,7 @@ class FileAudioDataset(RawAudioDataset):
 
     def __getitem__(self, index):
         import soundfile as sf
+
         fn = self.fnames[index]
         fn = fn if isinstance(self.fnames, list) else fn.as_py()
         fn = self.text_compressor.decompress(fn)
@@ -351,7 +352,7 @@ class BinarizedAudioDataset(RawAudioDataset):
             **mask_compute_kwargs,
         )
 
-        from fairseq.data import data_utils, Dictionary
+        from fairseq.data import Dictionary, data_utils
 
         self.fnames_dict = Dictionary.load(os.path.join(data_dir, "dict.txt"))
 

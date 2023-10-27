@@ -28,7 +28,7 @@ class MosesTokenizer:
         self.cfg = cfg
 
         try:
-            from sacremoses import MosesTokenizer, MosesDetokenizer
+            from sacremoses import MosesDetokenizer, MosesTokenizer
 
             self.tok = MosesTokenizer(cfg.source_lang)
             self.detok = MosesDetokenizer(cfg.target_lang)

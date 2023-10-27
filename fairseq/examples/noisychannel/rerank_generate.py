@@ -12,10 +12,10 @@ import os
 import subprocess
 from contextlib import redirect_stdout
 
-from fairseq import options
+from examples.noisychannel import rerank_options, rerank_utils
 from fairseq_cli import generate, preprocess
 
-from examples.noisychannel import rerank_options, rerank_utils
+from fairseq import options
 
 
 def gen_and_reprocess_nbest(args):
@@ -323,7 +323,6 @@ def gen_and_reprocess_nbest(args):
             and not args.right_to_left2
             or not rerank1_is_gen
         ):
-
             if args.backwards1 or args.backwards2:
                 if args.backwards_score_dict_dir is not None:
                     bw_dict = args.backwards_score_dict_dir

@@ -6,6 +6,7 @@
 import unittest
 
 import torch
+
 from fairseq.data import Dictionary
 from fairseq.modules import CharacterTokenEmbedder
 

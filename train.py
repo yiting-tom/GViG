@@ -25,7 +25,7 @@ logging.basicConfig(
     level=os.environ.get("LOGLEVEL", "INFO").upper(),
     stream=sys.stdout,
 )
-logger = logging.getLogger("fairseq_cli.train")
+logger: logging.Logger = logging.getLogger("fairseq_cli.train")
 
 import numpy as np
 import torch
@@ -645,8 +645,10 @@ def cli_main(
         )
 
     if args.profile:
+        logger.warning("here")
         with torch.cuda.profiler.profile():
             with torch.autograd.profiler.emit_nvtx():
+                logger.warning("here 2")
                 distributed_utils.call_main(cfg, main)
     else:
         distributed_utils.call_main(cfg, main)

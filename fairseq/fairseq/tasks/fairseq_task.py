@@ -10,13 +10,13 @@ from argparse import Namespace
 from typing import Any, Callable, Dict, List
 
 import torch
+from omegaconf import DictConfig
+
 from fairseq import metrics, search, tokenizer, utils
 from fairseq.data import Dictionary, FairseqDataset, data_utils, encoders, iterators
 from fairseq.dataclass import FairseqDataclass
 from fairseq.dataclass.utils import gen_parser_from_dataclass
 from fairseq.optim.amp_optimizer import AMPOptimizer
-from omegaconf import DictConfig
-
 
 logger = logging.getLogger(__name__)
 

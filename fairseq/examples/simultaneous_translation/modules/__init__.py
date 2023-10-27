@@ -4,8 +4,9 @@
 # LICENSE file in the root directory of this source tree.
 
 
-import os
 import importlib
+import os
+
 from fairseq import registry
 
 (

@@ -13,8 +13,9 @@ try:
 except ImportError:
     raise ImportError("Please install py-webrtcvad: pip install webrtcvad")
 import argparse
-import os
 import logging
+import os
+
 from tqdm import tqdm
 
 AUDIO_SUFFIX = ".wav"

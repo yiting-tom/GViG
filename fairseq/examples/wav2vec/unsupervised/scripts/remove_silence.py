@@ -11,12 +11,12 @@ vads=shards/train.vads
 python remove_silence.py --paths $paths --vads $vads
 """
 
-import os
 import argparse
+import os
+
 import torch
 import torchaudio
 import tqdm
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--tsv", default="", type=str)

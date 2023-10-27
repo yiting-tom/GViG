@@ -10,6 +10,7 @@ import tempfile
 import unittest
 
 import torch
+
 from fairseq import tokenizer
 from fairseq.data import Dictionary
 

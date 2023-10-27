@@ -8,6 +8,8 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
 import torch
+from omegaconf import II
+
 from fairseq.dataclass import FairseqDataclass
 from fairseq.models import (
     FairseqIncrementalDecoder,
@@ -15,8 +17,6 @@ from fairseq.models import (
     register_model,
 )
 from fairseq.modules.checkpoint_activations import checkpoint_wrapper
-from omegaconf import II
-
 
 logger = logging.getLogger(__name__)
 

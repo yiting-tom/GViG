@@ -5,16 +5,17 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-from dataclasses import dataclass
-import hydra
-from hydra.core.config_store import ConfigStore
 import logging
-from omegaconf import MISSING, OmegaConf
 import os
 import os.path as osp
-from pathlib import Path
 import subprocess
+from dataclasses import dataclass
+from pathlib import Path
 from typing import Optional
+
+import hydra
+from hydra.core.config_store import ConfigStore
+from omegaconf import MISSING, OmegaConf
 
 from fairseq.data.dictionary import Dictionary
 from fairseq.dataclass import FairseqDataclass
@@ -42,7 +43,6 @@ class KaldiInitializerConfig(FairseqDataclass):
 def create_units(fst_dir: Path, in_labels: str, vocab: Dictionary) -> Path:
     in_units_file = fst_dir / f"kaldi_dict.{in_labels}.txt"
     if not in_units_file.exists():
-
         logger.info(f"Creating {in_units_file}")
 
         with open(in_units_file, "w") as f:
@@ -62,7 +62,6 @@ def create_lexicon(
     in_units_file: Path,
     out_words_file: Path,
 ) -> (Path, Path):
-
     disambig_in_units_file = fst_dir / f"kaldi_dict.{cfg.in_labels}_disambig.txt"
     lexicon_file = fst_dir / f"kaldi_lexicon.{unique_label}.txt"
     disambig_lexicon_file = fst_dir / f"kaldi_lexicon.{unique_label}_disambig.txt"
@@ -132,7 +131,6 @@ def create_lexicon(
 def create_G(
     kaldi_root: Path, fst_dir: Path, lm_arpa: Path, arpa_base: str
 ) -> (Path, Path):
-
     out_words_file = fst_dir / f"kaldi_dict.{arpa_base}.txt"
     grammar_graph = fst_dir / f"G_{arpa_base}.fst"
     if not grammar_graph.exists() or not out_words_file.exists():
@@ -678,7 +676,6 @@ def cli_main(cfg: KaldiInitializerConfig) -> None:
 
 
 if __name__ == "__main__":
-
     logging.root.setLevel(logging.INFO)
     logging.basicConfig(level=logging.INFO)
 

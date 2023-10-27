@@ -53,7 +53,6 @@ __all__ = [
 
 
 def build_model(cfg: FairseqDataclass, task):
-
     model = None
     model_type = getattr(cfg, "_name", None) or getattr(cfg, "arch", None)
 
@@ -98,9 +97,7 @@ def build_model(cfg: FairseqDataclass, task):
 
     assert model is not None, (
         f"Could not infer model type from {cfg}. "
-        "Available models: {}".format(
-            MODEL_DATACLASS_REGISTRY.keys()
-        )
+        "Available models: {}".format(MODEL_DATACLASS_REGISTRY.keys())
         + f" Requested model type: {model_type}"
     )
 

@@ -7,6 +7,7 @@ import math
 
 import torch
 import torch.nn.functional as F
+
 from fairseq import utils
 from fairseq.criterions import LegacyFairseqCriterion, register_criterion
 from fairseq.data import encoders

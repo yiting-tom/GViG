@@ -7,6 +7,7 @@ import math
 
 import torch
 import torch.nn.functional as F
+
 from fairseq.models.nat import (
     _apply_del_words,
     _apply_ins_masks,

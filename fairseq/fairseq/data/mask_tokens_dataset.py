@@ -7,6 +7,7 @@ from functools import lru_cache
 
 import numpy as np
 import torch
+
 from fairseq.data import Dictionary, data_utils
 
 from . import BaseWrapperDataset, LRUCacheDataset

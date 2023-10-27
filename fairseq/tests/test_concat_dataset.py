@@ -6,9 +6,10 @@
 import unittest
 
 import torch
+from tests.test_train import mock_dict
+
 from fairseq.data import LanguagePairDataset, TokenBlockDataset
 from fairseq.data.concat_dataset import ConcatDataset
-from tests.test_train import mock_dict
 
 
 class TestConcatDataset(unittest.TestCase):

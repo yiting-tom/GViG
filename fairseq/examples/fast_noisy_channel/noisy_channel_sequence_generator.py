@@ -3,17 +3,17 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+import math
 from typing import Dict, List, Optional
 
-import math
 import numpy as np
-
 import torch
 import torch.nn.functional as F
 from torch import Tensor
 
-from .noisy_channel_beam_search import NoisyChannelBeamSearch
 from fairseq.sequence_generator import EnsembleModel
+
+from .noisy_channel_beam_search import NoisyChannelBeamSearch
 
 
 class NoisyChannelSequenceGenerator:

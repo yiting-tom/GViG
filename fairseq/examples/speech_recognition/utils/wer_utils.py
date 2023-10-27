@@ -13,7 +13,6 @@ from enum import Enum
 
 import numpy as np
 
-
 """
     Utility modules for computation of Word Error Rate,
     Alignments, as well as more granular metrics like

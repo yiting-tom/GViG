@@ -4,18 +4,17 @@
 # LICENSE file in the root directory of this source tree.
 
 import logging
-from pathlib import Path
 from argparse import Namespace
+from pathlib import Path
 
 from fairseq.data import Dictionary, encoders
 from fairseq.data.audio.speech_to_text_dataset import (
     S2TDataConfig,
     SpeechToTextDataset,
     SpeechToTextDatasetCreator,
-    get_features_or_waveform
+    get_features_or_waveform,
 )
 from fairseq.tasks import LegacyFairseqTask, register_task
-
 
 logger = logging.getLogger(__name__)
 
@@ -101,7 +100,7 @@ class SpeechToTextTask(LegacyFairseqTask):
             is_train_split=is_train_split,
             epoch=epoch,
             seed=self.args.seed,
-            speaker_to_id=self.speaker_to_id
+            speaker_to_id=self.speaker_to_id,
         )
 
     @property
@@ -143,8 +142,7 @@ class SpeechToTextTask(LegacyFairseqTask):
             extra_gen_cls_kwargs = {}
         extra_gen_cls_kwargs["symbols_to_strip_from_output"] = lang_token_ids
         return super().build_generator(
-            models, args, seq_gen_cls=None,
-            extra_gen_cls_kwargs=extra_gen_cls_kwargs
+            models, args, seq_gen_cls=None, extra_gen_cls_kwargs=extra_gen_cls_kwargs
         )
 
     def build_tokenizer(self, args):

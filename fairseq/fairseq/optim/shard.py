@@ -7,7 +7,6 @@ from typing import Any, Dict
 
 from fairseq.distributed import utils
 
-
 try:
     from fairscale.optim import OSS
 

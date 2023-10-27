@@ -5,10 +5,11 @@
 # LICENSE file in the root directory of this source tree.
 
 import argparse
-import fasttext as ft
 import os
-import regex
 import sys
+
+import fasttext as ft
+import regex
 
 
 def get_parser():

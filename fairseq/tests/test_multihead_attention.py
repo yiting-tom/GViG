@@ -6,6 +6,7 @@
 import unittest
 
 import torch
+
 from fairseq.modules.multihead_attention import MultiheadAttention
 
 

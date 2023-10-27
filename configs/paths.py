@@ -4,7 +4,7 @@ ROOT: Path = Path(__file__).parent.parent
 DATASETS_DIR: Path = ROOT / "datasets"
 
 # The directory where the WSDM dataset is stored
-WSDM_CSV_DIR: Path = DATASETS_DIR / "csvs"
+WSDM_CSV_DIR: Path = DATASETS_DIR / "official"
 WSDM_IMAGES_DIR: Path = DATASETS_DIR / "images"
 
 # The data provided by WSDM

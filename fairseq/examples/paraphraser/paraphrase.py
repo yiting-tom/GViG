@@ -8,7 +8,6 @@ import sys
 
 from fairseq.models.transformer import TransformerModel
 
-
 logging.getLogger().setLevel(logging.INFO)
 
 

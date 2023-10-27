@@ -25,7 +25,6 @@ from fairseq.sequence_generator import SequenceGenerator
 from . import register_task
 from .multilingual_translation import MultilingualTranslationTask
 
-
 logger = logging.getLogger(__name__)
 
 

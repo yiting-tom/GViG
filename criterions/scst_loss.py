@@ -5,11 +5,12 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 import torch
+from omegaconf import II
+
 from data import data_utils
 from fairseq import metrics, utils
 from fairseq.criterions import FairseqCriterion, register_criterion
 from fairseq.dataclass import FairseqDataclass
-from omegaconf import II
 from utils.cider.pyciderevalcap.ciderD.ciderD import CiderD
 
 

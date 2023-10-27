@@ -9,7 +9,6 @@ import numpy as np
 
 from . import BaseWrapperDataset
 
-
 logger = logging.getLogger(__name__)
 
 

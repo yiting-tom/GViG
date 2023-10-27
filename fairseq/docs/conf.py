@@ -19,8 +19,8 @@
 
 import os
 import sys
-from fairseq import __version__
 
+from fairseq import __version__
 
 # source code directory, relative to this file, for sphinx-autobuild
 sys.path.insert(0, os.path.abspath(".."))

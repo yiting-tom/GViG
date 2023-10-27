@@ -5,15 +5,14 @@
 # LICENSE file in the root directory of this source tree.
 
 import argparse
+import os.path as osp
 import sys
-
 from copy import deepcopy
-from scipy.signal import lfilter
 
 import numpy as np
-from tqdm import tqdm
 import soundfile as sf
-import os.path as osp
+from scipy.signal import lfilter
+from tqdm import tqdm
 
 
 def get_parser():

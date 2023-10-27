@@ -7,6 +7,7 @@ from typing import Optional, Tuple
 
 import torch
 import torch.nn as nn
+
 from fairseq.modules import (
     FairseqDropout,
     LayerDropModuleList,
@@ -35,9 +36,7 @@ def init_bert_params(module):
     def normal_(data):
         # with FSDP, module params will be on CUDA, so we cast them back to CPU
         # so that the RNG is consistent with and without FSDP
-        data.copy_(
-            data.cpu().normal_(mean=0.0, std=0.02).to(data.device)
-        )
+        data.copy_(data.cpu().normal_(mean=0.0, std=0.02).to(data.device))
 
     if isinstance(module, nn.Linear):
         normal_(module.weight.data)
@@ -105,7 +104,6 @@ class TransformerSentenceEncoder(nn.Module):
         q_noise: float = 0.0,
         qn_block_size: int = 8,
     ) -> None:
-
         super().__init__()
         self.padding_idx = padding_idx
         self.vocab_size = vocab_size
@@ -276,7 +274,9 @@ class TransformerSentenceEncoder(nn.Module):
             inner_states.append(x)
 
         for layer in self.layers:
-            x, _ = layer(x, self_attn_padding_mask=padding_mask, self_attn_mask=attn_mask)
+            x, _ = layer(
+                x, self_attn_padding_mask=padding_mask, self_attn_mask=attn_mask
+            )
             if not last_state_only:
                 inner_states.append(x)
 

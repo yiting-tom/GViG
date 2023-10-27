@@ -6,7 +6,6 @@
 
 from fairseq.data.encoders import register_bpe
 
-
 SPACE = chr(32)
 SPACE_ESCAPE = chr(9601)
 

@@ -4,6 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 
 import torch
+
 from fairseq.models import register_model, register_model_architecture
 from fairseq.models.nat import NATransformerModel
 
@@ -87,7 +88,6 @@ class IterNATransformerModel(NATransformerModel):
     def forward(
         self, src_tokens, src_lengths, prev_output_tokens, tgt_tokens, **kwargs
     ):
-
         B, T = prev_output_tokens.size()
 
         # encoding

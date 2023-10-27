@@ -10,10 +10,11 @@ from typing import Optional
 import torch
 from omegaconf import II
 
-from .dummy_dataset import DummyDataset
 from fairseq.data import Dictionary
 from fairseq.dataclass import FairseqDataclass
 from fairseq.tasks import FairseqTask, register_task
+
+from .dummy_dataset import DummyDataset
 
 logger = logging.getLogger(__name__)
 

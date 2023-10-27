@@ -10,8 +10,7 @@ import sys
 import soundfile as sf
 import torch
 import torchaudio
-
-from feature_utils import get_path_iterator, dump_feature
+from feature_utils import dump_feature, get_path_iterator
 
 logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",

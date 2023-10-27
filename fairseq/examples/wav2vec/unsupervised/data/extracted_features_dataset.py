@@ -4,15 +4,14 @@
 # LICENSE file in the root directory of this source tree.
 
 
+import contextlib
 import logging
 import os
-import contextlib
 
 import numpy as np
 import torch
 
 from fairseq.data import FairseqDataset, data_utils
-
 
 logger = logging.getLogger(__name__)
 

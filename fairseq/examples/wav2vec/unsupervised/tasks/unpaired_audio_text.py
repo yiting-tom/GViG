@@ -5,31 +5,26 @@
 # the root directory of this source tree. An additional grant of patent rights
 # can be found in the PATENTS file in the same directory.
 
-from dataclasses import dataclass, field
 import logging
 import math
 import os
+from dataclasses import dataclass, field
 from typing import Optional
+
 import torch
-
-from fairseq.logging import metrics
-from fairseq.tasks import FairseqTask, register_task
-from ..data import ExtractedFeaturesDataset, RandomInputDataset
-
-from fairseq.data import (
-    Dictionary,
-    data_utils,
-    StripTokenDataset,
-)
-from fairseq.dataclass import FairseqDataclass
-from fairseq.distributed.utils import get_data_parallel_world_size
-from omegaconf import MISSING
-
 from examples.speech_recognition.kaldi.kaldi_decoder import (
     KaldiDecoder,
     KaldiDecoderConfig,
 )
+from omegaconf import MISSING
 
+from fairseq.data import Dictionary, StripTokenDataset, data_utils
+from fairseq.dataclass import FairseqDataclass
+from fairseq.distributed.utils import get_data_parallel_world_size
+from fairseq.logging import metrics
+from fairseq.tasks import FairseqTask, register_task
+
+from ..data import ExtractedFeaturesDataset, RandomInputDataset
 
 logger = logging.getLogger(__name__)
 
@@ -198,7 +193,6 @@ class UnpairedAudioText(FairseqTask):
                 sample["id"],
             )
         ):
-
             if t is not None:
                 t = t[(t >= self.target_dictionary.nspecial)]
             x = x[

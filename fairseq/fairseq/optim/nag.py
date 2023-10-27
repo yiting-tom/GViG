@@ -8,9 +8,10 @@ from dataclasses import dataclass, field
 from typing import List
 
 import torch
-from fairseq.dataclass import FairseqDataclass
 from omegaconf import II, DictConfig
 from torch.optim.optimizer import Optimizer, required
+
+from fairseq.dataclass import FairseqDataclass
 
 from . import FairseqOptimizer, register_optimizer
 

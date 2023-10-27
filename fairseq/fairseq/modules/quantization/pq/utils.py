@@ -6,8 +6,9 @@
 import logging
 import re
 from operator import attrgetter, itemgetter
-import torch
+
 import numpy as np
+import torch
 import torch.distributed as dist
 import torch.nn as nn
 

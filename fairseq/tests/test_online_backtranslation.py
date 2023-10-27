@@ -8,11 +8,12 @@ import unittest
 from pathlib import Path
 from typing import Any, Dict, Sequence
 
+import torch
+from tests import utils
+
 import fairseq.data.indexed_dataset as indexed_dataset
 import fairseq.options
 import fairseq.tasks.online_backtranslation as obt
-import torch
-from tests import utils
 
 
 def mk_sample(tokens: Sequence[int], batch_size: int = 2) -> Dict[str, Any]:

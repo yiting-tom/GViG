@@ -8,8 +8,9 @@ from typing import Any, Optional
 
 import torch
 import torch.onnx.operators
-from fairseq import utils
 from torch import Tensor, nn
+
+from fairseq import utils
 
 
 class SinusoidalPositionalEmbedding(nn.Module):

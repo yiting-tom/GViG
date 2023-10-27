@@ -5,7 +5,8 @@
 
 import math
 from dataclasses import dataclass, field
-from typing import Optional, List, Tuple
+from typing import List, Optional, Tuple
+
 from omegaconf import II
 
 from fairseq.dataclass import FairseqDataclass

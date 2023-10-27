@@ -3,22 +3,22 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-from argparse import Namespace
 import contextlib
 import copy
 import math
+from argparse import Namespace
+from dataclasses import dataclass, field
+from typing import Any, Optional
+
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from dataclasses import dataclass, field
-from omegaconf import MISSING, II, open_dict
-from typing import Any, Optional
+from omegaconf import II, MISSING, open_dict
 
 from fairseq import checkpoint_utils, tasks, utils
 from fairseq.dataclass import FairseqDataclass
 from fairseq.dataclass.utils import convert_namespace_to_omegaconf
-from fairseq.tasks import FairseqTask
 from fairseq.models import (
     BaseFairseqModel,
     FairseqEncoder,
@@ -27,11 +27,8 @@ from fairseq.models import (
     register_model,
 )
 from fairseq.models.wav2vec.wav2vec2 import MASKING_DISTRIBUTION_CHOICES
-from fairseq.modules import (
-    LayerNorm,
-    PositionalEmbedding,
-    TransformerDecoderLayer,
-)
+from fairseq.modules import LayerNorm, PositionalEmbedding, TransformerDecoderLayer
+from fairseq.tasks import FairseqTask
 
 
 @dataclass

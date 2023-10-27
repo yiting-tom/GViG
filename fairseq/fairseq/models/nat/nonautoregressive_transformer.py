@@ -5,6 +5,7 @@
 
 import torch
 import torch.nn.functional as F
+
 from fairseq import utils
 from fairseq.iterative_refinement_generator import DecoderOut
 from fairseq.models import register_model, register_model_architecture

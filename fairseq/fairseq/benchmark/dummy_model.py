@@ -5,6 +5,7 @@
 
 import torch.nn as nn
 import torch.nn.functional as F
+
 from fairseq.data import Dictionary
 from fairseq.models import (
     FairseqDecoder,

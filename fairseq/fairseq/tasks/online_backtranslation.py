@@ -8,11 +8,10 @@ import json
 import logging
 import math
 import os
-from argparse import Namespace
+from argparse import ArgumentError, Namespace
 from collections import OrderedDict, defaultdict
 from pathlib import Path
 from typing import Dict, Sequence, Tuple
-from argparse import ArgumentError
 
 import numpy as np
 import torch

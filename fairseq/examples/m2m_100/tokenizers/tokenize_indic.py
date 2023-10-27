@@ -11,7 +11,6 @@ import sys
 from indicnlp.normalize.indic_normalize import IndicNormalizerFactory
 from indicnlp.tokenize.indic_tokenize import trivial_tokenize
 
-
 factory = IndicNormalizerFactory()
 normalizer = factory.get_normalizer(
     sys.argv[1], remove_nuktas=False, nasals_mode="do_nothing"

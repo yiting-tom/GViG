@@ -9,8 +9,9 @@ import re
 import subprocess
 from contextlib import redirect_stdout
 
-from fairseq import options
 from fairseq_cli import eval_lm, preprocess
+
+from fairseq import options
 
 
 def reprocess(fle):

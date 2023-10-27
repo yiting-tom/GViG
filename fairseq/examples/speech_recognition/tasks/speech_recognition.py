@@ -11,6 +11,7 @@ import sys
 import torch
 from examples.speech_recognition.data import AsrDataset
 from examples.speech_recognition.data.replabels import replabel_symbol
+
 from fairseq.data import Dictionary
 from fairseq.tasks import LegacyFairseqTask, register_task
 

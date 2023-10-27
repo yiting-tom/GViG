@@ -8,12 +8,13 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 import torch
-from .dummy_dataset import DummyDataset
+from omegaconf import II
+
 from fairseq.data import Dictionary
 from fairseq.dataclass import FairseqDataclass
 from fairseq.tasks import FairseqTask, register_task
-from omegaconf import II
 
+from .dummy_dataset import DummyDataset
 
 logger = logging.getLogger(__name__)
 

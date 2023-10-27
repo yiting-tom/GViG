@@ -3,9 +3,9 @@ import unittest
 from typing import Any, Dict, Sequence
 
 import torch
-from fairseq.models import transformer
-
 from tests.test_roberta import FakeTask
+
+from fairseq.models import transformer
 
 
 def mk_sample(tok: Sequence[int] = None, batch_size: int = 2) -> Dict[str, Any]:

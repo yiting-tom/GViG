@@ -4,10 +4,10 @@ import re
 import unicodedata
 
 import pandas as pd
+from generate_wsdm_vg_data import RESULT_COLUMNS
 from wsdm_data.utils import img_formatter
 
 from configs import paths
-from generate_wsdm_vg_data import RESULT_COLUMNS
 
 # %%
 test = pd.read_csv(

@@ -3,11 +3,12 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-from dataclasses import dataclass
 import math
-from omegaconf import II
+from dataclasses import dataclass
 
 import torch
+from omegaconf import II
+
 from fairseq import metrics, modules, utils
 from fairseq.criterions import FairseqCriterion, register_criterion
 from fairseq.dataclass import FairseqDataclass

@@ -12,6 +12,7 @@ from functools import lru_cache
 
 import numpy as np
 import torch
+
 from fairseq.data import indexed_dataset
 from fairseq.data.huffman import HuffmanCoder
 from fairseq.file_io import PathManager
@@ -266,7 +267,7 @@ class HuffmanMMapIndexedDatasetBuilder:
         other_index = HuffmanMMapIndex(
             indexed_dataset.index_file_path(other_dataset_path_prefix)
         )
-        for (ptr, size) in other_index:
+        for ptr, size in other_index:
             self._ptrs.append(ptr + self._data_len)
             self._sizes.append(size)
 

@@ -6,23 +6,22 @@
 import shutil
 import struct
 from functools import lru_cache
+from typing import Union
 
 import numpy as np
 import torch
-from fairseq.dataclass.constants import DATASET_IMPL_CHOICES
+
 from fairseq.data.fasta_dataset import FastaDataset
+from fairseq.data.huffman import HuffmanMMapIndex, HuffmanMMapIndexedDataset
+from fairseq.dataclass.constants import DATASET_IMPL_CHOICES
 from fairseq.file_io import PathManager
-from fairseq.data.huffman import HuffmanMMapIndexedDataset, HuffmanMMapIndex
 
 from . import FairseqDataset
-
-from typing import Union
 
 
 def best_fitting_int_dtype(
     max_int_to_represent,
 ) -> Union[np.uint16, np.uint32, np.int64]:
-
     if max_int_to_represent is None:
         return np.uint32  # Safe guess
     elif max_int_to_represent < 65500:
@@ -68,7 +67,8 @@ def make_builder(out_file, impl, vocab_size=None):
         raise NotImplementedError
     elif impl == "huffman":
         raise ValueError(
-            "Use HuffmanCodeBuilder directly as it has a different interface.")
+            "Use HuffmanCodeBuilder directly as it has a different interface."
+        )
     else:
         return IndexedDatasetBuilder(out_file)
 
@@ -186,7 +186,7 @@ class IndexedDataset(FairseqDataset):
         if not self.data_file:
             self.read_data(self.path)
         self.check_index(i)
-        tensor_size = self.sizes[self.dim_offsets[i]: self.dim_offsets[i + 1]]
+        tensor_size = self.sizes[self.dim_offsets[i] : self.dim_offsets[i + 1]]
         a = np.empty(tensor_size, dtype=self.dtype)
         self.data_file.seek(self.data_offsets[i] * self.element_size)
         self.data_file.readinto(a)
@@ -240,7 +240,7 @@ class IndexedCachedDataset(IndexedDataset):
         for i in indices:
             self.cache_index[i] = ptx
             size = self.data_offsets[i + 1] - self.data_offsets[i]
-            a = self.cache[ptx: ptx + size]
+            a = self.cache[ptx : ptx + size]
             self.data_file.seek(self.data_offsets[i] * self.element_size)
             self.data_file.readinto(a)
             ptx += size
@@ -252,10 +252,10 @@ class IndexedCachedDataset(IndexedDataset):
     @lru_cache(maxsize=8)
     def __getitem__(self, i):
         self.check_index(i)
-        tensor_size = self.sizes[self.dim_offsets[i]: self.dim_offsets[i + 1]]
+        tensor_size = self.sizes[self.dim_offsets[i] : self.dim_offsets[i + 1]]
         a = np.empty(tensor_size, dtype=self.dtype)
         ptx = self.cache_index[i]
-        np.copyto(a, self.cache[ptx: ptx + a.size])
+        np.copyto(a, self.cache[ptx : ptx + a.size])
         item = torch.from_numpy(a).long()
         if self.fix_lua_indexing:
             item -= 1  # subtract 1 for 0-based indexing
@@ -340,10 +340,8 @@ class IndexedDatasetBuilder:
 
     def add_item(self, tensor):
         # +1 for Lua compatibility
-        bytes = self.out_file.write(
-            np.array(tensor.numpy() + 1, dtype=self.dtype))
-        self.data_offsets.append(
-            self.data_offsets[-1] + bytes / self.element_size)
+        bytes = self.out_file.write(np.array(tensor.numpy() + 1, dtype=self.dtype))
+        self.data_offsets.append(self.data_offsets[-1] + bytes / self.element_size)
         for s in tensor.size():
             self.sizes.append(s)
         self.dim_offsets.append(self.dim_offsets[-1] + len(tensor.size()))
@@ -374,11 +372,9 @@ class IndexedDatasetBuilder:
         index.write(b"TNTIDX\x00\x00")
         index.write(struct.pack("<Q", 1))
         index.write(
-            struct.pack("<QQ", _dtype_header_code(
-                self.dtype), self.element_size)
+            struct.pack("<QQ", _dtype_header_code(self.dtype), self.element_size)
         )
-        index.write(struct.pack("<QQ", len(
-            self.data_offsets) - 1, len(self.sizes)))
+        index.write(struct.pack("<QQ", len(self.data_offsets) - 1, len(self.sizes)))
         write_longs(index, self.dim_offsets)
         write_longs(index, self.data_offsets)
         write_longs(index, self.sizes)
@@ -403,8 +399,7 @@ class MMapIndexedDataset(torch.utils.data.Dataset):
 
                     self._file.write(cls._HDR_MAGIC)
                     self._file.write(struct.pack("<Q", 1))
-                    self._file.write(struct.pack(
-                        "<B", _dtype_header_code(dtype)))
+                    self._file.write(struct.pack("<B", _dtype_header_code(dtype)))
 
                     return self
 

@@ -5,7 +5,6 @@
 
 from .wav2vec_u import Wav2vec_U
 
-
 __all__ = [
     "Wav2vec_U",
 ]

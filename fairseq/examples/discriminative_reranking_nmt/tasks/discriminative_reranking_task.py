@@ -3,37 +3,35 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-from dataclasses import dataclass, field
-
 import itertools
 import logging
 import os
+from dataclasses import dataclass, field
 
 import numpy as np
 import torch
+from omegaconf import II, MISSING
 
 from fairseq import metrics
 from fairseq.data import (
     ConcatDataset,
     ConcatSentencesDataset,
-    data_utils,
     Dictionary,
     IdDataset,
-    indexed_dataset,
     NestedDictionaryDataset,
-    NumSamplesDataset,
     NumelDataset,
+    NumSamplesDataset,
     PrependTokenDataset,
     RawLabelDataset,
     RightPadDataset,
     SortDataset,
-    TruncateDataset,
     TokenBlockDataset,
+    TruncateDataset,
+    data_utils,
+    indexed_dataset,
 )
 from fairseq.dataclass import ChoiceEnum, FairseqDataclass
 from fairseq.tasks import FairseqTask, register_task
-from omegaconf import II, MISSING
-
 
 EVAL_BLEU_ORDER = 4
 TARGET_METRIC_CHOICES = ChoiceEnum(["bleu", "ter"])
@@ -457,6 +455,7 @@ class DiscriminativeRerankingNMTTask(FairseqTask):
 
                 def compute_bleu(meters):
                     import inspect
+
                     import sacrebleu
 
                     fn_sig = inspect.getfullargspec(sacrebleu.compute_bleu)[0]

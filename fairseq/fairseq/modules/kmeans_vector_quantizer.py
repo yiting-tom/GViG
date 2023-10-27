@@ -5,6 +5,7 @@
 
 import torch
 import torch.nn as nn
+
 from fairseq.modules import Fp32GroupNorm
 
 
@@ -70,7 +71,6 @@ class KmeansVectorQuantizer(nn.Module):
         return res["x"], res["targets"]
 
     def forward(self, x, produce_targets=False):
-
         result = {"num_vars": self.num_vars}
 
         if self.time_first:

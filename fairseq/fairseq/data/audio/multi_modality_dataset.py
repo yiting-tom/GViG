@@ -7,17 +7,18 @@
 
 import logging
 import math
-from typing import List, Optional, NamedTuple
+from typing import List, NamedTuple, Optional
 
 import numpy as np
 import torch
+
 from fairseq.data import (
     ConcatDataset,
-    LanguagePairDataset,
+    FairseqDataset,
     FileAudioDataset,
+    LanguagePairDataset,
     data_utils,
 )
-from fairseq.data import FairseqDataset
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +29,7 @@ class ModalityDatasetItem(NamedTuple):
     max_positions: List[int]
     max_tokens: Optional[int] = None
     max_sentences: Optional[int] = None
+
 
 # MultiModalityDataset: it concate multiple datasets with different modalities.
 # Compared with ConcatDataset it can 1) sample data given the ratios for different datasets

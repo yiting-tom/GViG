@@ -17,7 +17,8 @@ import sys
 from itertools import chain
 
 import numpy as np
-from sacrebleu import compute_bleu, corpus_bleu as _corpus_bleu
+from sacrebleu import compute_bleu
+from sacrebleu import corpus_bleu as _corpus_bleu
 
 
 def main():

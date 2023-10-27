@@ -12,16 +12,16 @@ R-Drop samples, and calculating KL divergence.
 """
 import math
 from dataclasses import dataclass, field
-from typing import Union, Tuple, Optional, Dict, Any, List
-
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 import torch
 import torch.nn.functional as F
+from omegaconf import II
+
 from fairseq import metrics, utils
 from fairseq.criterions import FairseqCriterion, register_criterion
 from fairseq.dataclass import FairseqDataclass
-from omegaconf import II
 
 
 @dataclass

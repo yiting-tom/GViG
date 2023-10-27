@@ -15,8 +15,8 @@ from collections import namedtuple
 from itertools import chain
 
 import sentencepiece as spm
-from fairseq.data import Dictionary
 
+from fairseq.data import Dictionary
 
 MILLISECONDS_TO_SECONDS = 0.001
 

@@ -9,6 +9,7 @@ import unittest
 
 import tests.utils as test_utils
 import torch
+
 from fairseq.criterions.cross_entropy import CrossEntropyCriterion
 from fairseq.criterions.label_smoothed_cross_entropy import (
     LabelSmoothedCrossEntropyCriterion,

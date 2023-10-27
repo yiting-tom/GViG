@@ -9,13 +9,13 @@ import sys
 from typing import Dict, List, Optional
 
 import torch
+
 from fairseq.models import (
     FairseqIncrementalDecoder,
     FairseqLanguageModel,
     register_model,
     register_model_architecture,
 )
-
 
 logger = logging.getLogger(__name__)
 

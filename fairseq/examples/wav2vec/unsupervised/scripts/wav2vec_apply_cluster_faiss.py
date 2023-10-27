@@ -7,15 +7,14 @@
 import argparse
 import os
 import os.path as osp
-import numpy as np
-import tqdm
-import torch
 import sys
 
 import faiss
+import numpy as np
+import torch
 import torch.nn.functional as F
-
-from wav2vec_cluster_faiss import parse_faiss_specs, Wav2VecFeatureReader
+import tqdm
+from wav2vec_cluster_faiss import Wav2VecFeatureReader, parse_faiss_specs
 
 
 def get_parser():

@@ -14,8 +14,8 @@ from threading import Thread
 
 import numpy as np
 import torch
-from fairseq.data import data_utils
 
+from fairseq.data import data_utils
 
 logger = logging.getLogger(__name__)
 

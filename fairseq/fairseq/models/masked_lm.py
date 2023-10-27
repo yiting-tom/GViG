@@ -8,6 +8,7 @@ import logging
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
 from fairseq import utils
 from fairseq.models import (
     FairseqEncoder,
@@ -22,7 +23,6 @@ from fairseq.modules import (
 )
 from fairseq.modules.transformer_sentence_encoder import init_bert_params
 from fairseq.utils import safe_hasattr
-
 
 logger = logging.getLogger(__name__)
 

@@ -9,10 +9,10 @@ from dataclasses import dataclass, field
 from typing import List
 
 import torch
-from fairseq.dataclass import FairseqDataclass
-from fairseq.optim import FairseqOptimizer, register_optimizer
 from omegaconf import II, DictConfig
 
+from fairseq.dataclass import FairseqDataclass
+from fairseq.optim import FairseqOptimizer, register_optimizer
 
 try:
     import deepspeed

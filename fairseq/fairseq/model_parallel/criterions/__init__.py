@@ -6,7 +6,6 @@
 import importlib
 import os
 
-
 # automatically import any Python files in the criterions/ directory
 for file in sorted(os.listdir(os.path.dirname(__file__))):
     if file.endswith(".py") and not file.startswith("_"):

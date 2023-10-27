@@ -6,14 +6,14 @@
 import logging
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import Dict, Any, List, Optional
+from typing import Any, Dict, List, Optional
 
 import torch.optim
-from fairseq.dataclass import FairseqDataclass
-from fairseq.optim import FairseqOptimizer, register_optimizer, _build_optimizer
-from fairseq.optim.lr_scheduler import FairseqLRScheduler, build_lr_scheduler
 from omegaconf import II, open_dict
 
+from fairseq.dataclass import FairseqDataclass
+from fairseq.optim import FairseqOptimizer, _build_optimizer, register_optimizer
+from fairseq.optim.lr_scheduler import FairseqLRScheduler, build_lr_scheduler
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,9 @@ class OptimizerAndSchedulerConfig(FairseqDataclass):
     optimizer: Any = None
     lr_scheduler: Optional[Any] = None
     lr: List = II("optimization.lr")
-    lr_float: Optional[float] = None  # this makes it easier to sweep on learning rate with auto sweepers
+    lr_float: Optional[
+        float
+    ] = None  # this makes it easier to sweep on learning rate with auto sweepers
 
 
 @dataclass
@@ -39,7 +41,6 @@ class CompositeOptimizerConfig(FairseqDataclass):
 
 @register_optimizer("composite", dataclass=CompositeOptimizerConfig)
 class FairseqCompositeOptimizer(FairseqOptimizer):
-
     optimizers: Dict[str, FairseqOptimizer] = {}
     lr_schedulers: Dict[str, FairseqLRScheduler] = {}
     lr_scheduler: FairseqLRScheduler = None

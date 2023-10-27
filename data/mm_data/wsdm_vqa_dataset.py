@@ -121,6 +121,8 @@ class WSDMVQADataset(OFADataset):
             self.prompt = '这段文字" {} "描述的是哪个区域？'
 
     def __getitem__(self, index):
+        (image, width, height, left, top, right, bottom, question) = self.dataset[index]
+        uniq_id, image_path, text, region_coord = self.dataset[index]
         uniq_id, image_path, text, region_coord = self.dataset[index]
 
         image = Image.open(image_path).convert("RGB")

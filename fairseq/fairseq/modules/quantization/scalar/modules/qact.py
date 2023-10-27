@@ -55,7 +55,6 @@ class ActivationQuantizer:
     def register_hook(self):
         # forward hook
         def quantize_hook(module, x, y):
-
             # update parameters every 1000 iterations
             if self.counter % self.update_step == 0:
                 self.scale = None
@@ -81,7 +80,7 @@ class ActivationQuantizer:
 
             # using straight-through estimator (STE)
             clamp_low = -self.scale * self.zero_point
-            clamp_high = self.scale * (2 ** self.bits - 1 - self.zero_point)
+            clamp_high = self.scale * (2**self.bits - 1 - self.zero_point)
             return torch.clamp(y, clamp_low.item(), clamp_high.item()) + noise.detach()
 
         # register hook

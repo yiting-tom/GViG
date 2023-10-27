@@ -5,7 +5,6 @@
 
 from .unpaired_audio_text import UnpairedAudioText
 
-
 __all__ = [
     "UnpairedAudioText",
 ]

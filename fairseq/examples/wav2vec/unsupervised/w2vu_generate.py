@@ -9,30 +9,27 @@ Run inference for pre-processed data with a trained model.
 """
 
 import ast
-from collections import namedtuple
-from dataclasses import dataclass, field
-from enum import Enum, auto
-import hydra
-from hydra.core.config_store import ConfigStore
 import logging
 import math
 import os
-from omegaconf import OmegaConf
-from typing import Optional
 import sys
+from collections import namedtuple
+from dataclasses import dataclass, field
+from enum import Enum, auto
+from typing import Optional
 
 import editdistance
+import hydra
 import torch
-
+from examples.speech_recognition.kaldi.kaldi_decoder import KaldiDecoderConfig
+from hydra.core.config_store import ConfigStore
 from hydra.core.hydra_config import HydraConfig
+from omegaconf import OmegaConf, open_dict
 
 from fairseq import checkpoint_utils, progress_bar, tasks, utils
 from fairseq.data.data_utils import post_process
-from fairseq.dataclass.configs import FairseqDataclass, FairseqConfig
+from fairseq.dataclass.configs import FairseqConfig, FairseqDataclass
 from fairseq.logging.meters import StopwatchMeter
-from omegaconf import open_dict
-
-from examples.speech_recognition.kaldi.kaldi_decoder import KaldiDecoderConfig
 
 logging.root.setLevel(logging.INFO)
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
@@ -493,7 +490,6 @@ def generate(cfg: UnsupGenerateConfig, models, saved_cfg, use_cuda):
 
     lm_score_sum = 0
     if kenlm is not None:
-
         if cfg.unit_lm:
             lm_score_sum = sum(kenlm.score(w) for w in all_hyp_pieces)
         else:

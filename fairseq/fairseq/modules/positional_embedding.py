@@ -4,8 +4,9 @@
 # LICENSE file in the root directory of this source tree.
 
 import math
-import torch.nn as nn
+
 import torch
+import torch.nn as nn
 
 from .learned_positional_embedding import LearnedPositionalEmbedding
 from .sinusoidal_positional_embedding import SinusoidalPositionalEmbedding

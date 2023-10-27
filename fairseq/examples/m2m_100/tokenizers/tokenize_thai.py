@@ -8,6 +8,5 @@ import sys
 
 from pythainlp import word_tokenize
 
-
 for line in sys.stdin:
     print(" ".join(word_tokenize(line.strip())))

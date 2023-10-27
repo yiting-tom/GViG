@@ -6,7 +6,6 @@
 from .extracted_features_dataset import ExtractedFeaturesDataset
 from .random_input_dataset import RandomInputDataset
 
-
 __all__ = [
     "ExtractedFeaturesDataset",
     "RandomInputDataset",

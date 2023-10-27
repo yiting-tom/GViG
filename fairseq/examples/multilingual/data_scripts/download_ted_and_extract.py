@@ -4,16 +4,16 @@
 # LICENSE file in the root directory of this source tree.
 
 
+import csv
+import io
 import itertools
 import os
-import csv
-from collections import defaultdict
-from six.moves import zip
-import io
-import wget
 import sys
-
+from collections import defaultdict
 from subprocess import check_call, check_output
+
+import wget
+from six.moves import zip
 
 # scripts and data locations
 CWD = os.getcwd()
@@ -340,8 +340,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    import sys
     import json
+    import sys
 
     # TED Talks data directory
     ted_data_path = args.ted_data_path

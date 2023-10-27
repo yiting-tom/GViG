@@ -7,9 +7,8 @@ import logging
 import os
 import sys
 
-import numpy as np
-
 import joblib
+import numpy as np
 import torch
 import tqdm
 

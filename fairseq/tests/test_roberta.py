@@ -7,11 +7,12 @@ import functools
 import unittest
 from typing import Any, Dict, Sequence
 
+import torch
+from tests.utils import dummy_dictionary
+
 import fairseq
 import fairseq.options
 import fairseq.tasks
-import torch
-from tests.utils import dummy_dictionary
 
 VOCAB_SIZE = 100
 

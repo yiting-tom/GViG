@@ -7,7 +7,6 @@ from .block_pair_dataset import BlockPairDataset
 from .masked_lm_dataset import MaskedLMDataset
 from .masked_lm_dictionary import BertDictionary, MaskedLMDictionary
 
-
 __all__ = [
     "BertDictionary",
     "BlockPairDataset",

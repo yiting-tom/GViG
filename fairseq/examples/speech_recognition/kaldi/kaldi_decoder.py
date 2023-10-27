@@ -5,19 +5,19 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-from concurrent.futures import ThreadPoolExecutor
 import logging
-from omegaconf import MISSING
 import os
-import torch
-from typing import Optional
 import warnings
-
-
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
-from fairseq.dataclass import FairseqDataclass
-from .kaldi_initializer import KaldiInitializerConfig, initalize_kaldi
+from typing import Optional
 
+import torch
+from omegaconf import MISSING
+
+from fairseq.dataclass import FairseqDataclass
+
+from .kaldi_initializer import KaldiInitializerConfig, initalize_kaldi
 
 logger = logging.getLogger(__name__)
 
@@ -63,8 +63,8 @@ class KaldiDecoder:
                 LatticeFasterDecoder,
                 LatticeFasterDecoderOptions,
             )
+            from kaldi.fstext import SymbolTable, read_fst_kaldi
             from kaldi.lat.functions import DeterminizeLatticePhonePrunedOptions
-            from kaldi.fstext import read_fst_kaldi, SymbolTable
         except:
             warnings.warn(
                 "pykaldi is required for this functionality. Please install from https://github.com/pykaldi/pykaldi"

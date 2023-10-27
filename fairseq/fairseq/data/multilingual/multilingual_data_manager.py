@@ -8,8 +8,8 @@ import json
 import logging
 import math
 import os
-from collections import OrderedDict, defaultdict
 from argparse import ArgumentError
+from collections import OrderedDict, defaultdict
 
 from fairseq import utils
 from fairseq.data import (
@@ -36,7 +36,6 @@ from fairseq.data.multilingual.multilingual_utils import (
 from fairseq.data.multilingual.sampled_multi_dataset import CollateFormat
 from fairseq.file_io import PathManager
 from fairseq.utils import FileContentsAction, csv_str_list, eval_str_dict
-
 
 logger = logging.getLogger(__name__)
 

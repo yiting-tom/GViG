@@ -6,6 +6,7 @@
 import math
 
 import torch.nn as nn
+
 from fairseq.models.transformer import TransformerEncoder
 
 from .linformer_sentence_encoder_layer import LinformerTransformerEncoderLayer

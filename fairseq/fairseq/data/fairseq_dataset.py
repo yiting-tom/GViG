@@ -4,8 +4,10 @@
 # LICENSE file in the root directory of this source tree.
 
 import logging
+
 import numpy as np
 import torch.utils.data
+
 from fairseq.data import data_utils
 
 logger = logging.getLogger(__name__)
@@ -138,7 +140,7 @@ class FairseqDataset(torch.utils.data.Dataset, EpochListening):
             )
 
         try:
-            num_tokens_vec = self.num_tokens_vec(indices).astype('int64')
+            num_tokens_vec = self.num_tokens_vec(indices).astype("int64")
         except NotImplementedError:
             num_tokens_vec = None
 

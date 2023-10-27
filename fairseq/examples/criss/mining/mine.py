@@ -15,7 +15,6 @@ except ImportError:
     has_faiss = False
 import numpy as np
 
-
 GB = 1024 * 1024 * 1024
 
 

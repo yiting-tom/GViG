@@ -10,7 +10,6 @@ import re
 import shutil
 import sys
 
-
 pt_regexp = re.compile(r"checkpoint(\d+|_\d+_\d+|_[a-z]+)\.pt")
 pt_regexp_epoch_based = re.compile(r"checkpoint(\d+)\.pt")
 pt_regexp_update_based = re.compile(r"checkpoint_\d+_(\d+)\.pt")

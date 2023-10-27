@@ -10,8 +10,9 @@ from io import StringIO
 from unittest.mock import MagicMock, patch
 
 import torch
-from fairseq import checkpoint_utils, data
 from omegaconf import OmegaConf
+
+from fairseq import checkpoint_utils, data
 
 
 def mock_trainer(epoch, num_updates, iterations_in_epoch):

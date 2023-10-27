@@ -9,6 +9,5 @@ import fileinput
 
 import sacrebleu
 
-
 for line in fileinput.input():
     print(sacrebleu.tokenize_zh(line))

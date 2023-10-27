@@ -32,13 +32,14 @@ from typing import Optional, Tuple
 
 import numpy as np
 import torch
+from omegaconf import II
+from PIL import Image
+
 from fairseq import metrics, utils
 from fairseq.criterions import FairseqCriterion, register_criterion
 from fairseq.data import data_utils
 from fairseq.dataclass import FairseqDataclass
 from models import clip
-from omegaconf import II
-from PIL import Image
 
 
 def custom_to_pil(x: torch.Tensor) -> Image.Image:

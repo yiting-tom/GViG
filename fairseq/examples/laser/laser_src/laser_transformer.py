@@ -4,12 +4,11 @@
 # LICENSE file in the root directory of this source tree.
 
 import logging
-
 from typing import Any, Dict, List, Optional
-from torch import Tensor
 
 import torch
 import torch.nn as nn
+from torch import Tensor
 
 from fairseq.models import (
     FairseqEncoderDecoderModel,
@@ -17,15 +16,13 @@ from fairseq.models import (
     register_model_architecture,
 )
 from fairseq.models.transformer import (
-    base_architecture,
     Embedding,
-    TransformerModel,
-    TransformerEncoder,
     TransformerDecoder,
+    TransformerEncoder,
+    TransformerModel,
+    base_architecture,
 )
-from fairseq.modules import (
-    TransformerDecoderLayer,
-)
+from fairseq.modules import TransformerDecoderLayer
 
 logger = logging.getLogger(__name__)
 
@@ -163,7 +160,7 @@ class LaserTransformerDecoder(TransformerDecoder):
             nn.init.normal_(
                 self.output_projection.weight,
                 mean=0,
-                std=laser_output_embed_dim ** -0.5,
+                std=laser_output_embed_dim**-0.5,
             )
 
     def build_decoder_layer(self, args, no_encoder_attn=False):

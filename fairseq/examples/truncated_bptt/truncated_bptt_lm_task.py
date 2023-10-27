@@ -9,18 +9,13 @@ from dataclasses import dataclass, field
 from typing import List, Optional, Tuple
 
 import torch
+from omegaconf import II
+
 from fairseq import utils
-from fairseq.data import (
-    Dictionary,
-    TokenBlockDataset,
-    data_utils,
-    iterators,
-)
+from fairseq.data import Dictionary, TokenBlockDataset, data_utils, iterators
 from fairseq.dataclass import FairseqDataclass
 from fairseq.distributed import utils as dist_utils
 from fairseq.tasks import FairseqTask, register_task
-from omegaconf import II
-
 
 logger = logging.getLogger(__name__)
 
@@ -134,7 +129,7 @@ class TruncatedBPTTLMTask(FairseqTask):
 
         # fairseq expects batches to have the following structure
         return {
-            "id": torch.tensor([id]*item.size(0)),
+            "id": torch.tensor([id] * item.size(0)),
             "net_input": {
                 "src_tokens": item,
             },

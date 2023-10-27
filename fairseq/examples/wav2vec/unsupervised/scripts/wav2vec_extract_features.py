@@ -7,15 +7,15 @@
 import argparse
 import os
 import os.path as osp
-import tqdm
-import torch
-import torch.nn.functional as F
 from shutil import copyfile
 
+import soundfile as sf
+import torch
+import torch.nn.functional as F
+import tqdm
 from npy_append_array import NpyAppendArray
 
 import fairseq
-import soundfile as sf
 
 
 def get_parser():

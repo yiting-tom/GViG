@@ -8,6 +8,7 @@ from typing import Dict, List, Tuple
 
 import numpy as np
 import torch
+
 from fairseq.data import Dictionary, FairseqDataset, data_utils
 from fairseq.data.concat_dataset import ConcatDataset
 from fairseq.data.legacy.block_pair_dataset import BlockPairDataset

@@ -3,12 +3,12 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+import math
 from dataclasses import dataclass
 from enum import Enum, auto
-import math
-import numpy as np
-from typing import Tuple, List, Optional, Dict
+from typing import Dict, List, Optional, Tuple
 
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -17,10 +17,7 @@ from torch import autograd
 from fairseq import checkpoint_utils, utils
 from fairseq.dataclass import FairseqDataclass
 from fairseq.models import BaseFairseqModel, register_model
-from fairseq.modules import (
-    SamePad,
-    TransposeLast,
-)
+from fairseq.modules import SamePad, TransposeLast
 
 
 class SegmentationType(Enum):
@@ -42,7 +39,6 @@ class SegmentationConfig(FairseqDataclass):
 
 @dataclass
 class Wav2vec_UConfig(FairseqDataclass):
-
     discriminator_kernel: int = 3
     discriminator_dilation: int = 1
     discriminator_dim: int = 256
@@ -343,14 +339,12 @@ class Generator(nn.Module):
 @register_model("wav2vec_u", dataclass=Wav2vec_UConfig)
 class Wav2vec_U(BaseFairseqModel):
     def calc_gradient_penalty(self, real_data, fake_data):
-
         b_size = min(real_data.size(0), fake_data.size(0))
         t_size = min(real_data.size(1), fake_data.size(1))
 
         if self.cfg.probabilistic_grad_penalty_slicing:
 
             def get_slice(data, dim, target_size):
-
                 size = data.size(dim)
                 diff = size - target_size
                 if diff <= 0:
@@ -392,7 +386,7 @@ class Wav2vec_U(BaseFairseqModel):
         super().set_num_updates(num_updates)
         self.update_num = num_updates
         self.curr_temp = max(
-            self.max_temp * self.temp_decay ** num_updates, self.min_temp
+            self.max_temp * self.temp_decay**num_updates, self.min_temp
         )
 
     def discrim_step(self, num_updates):
@@ -491,7 +485,6 @@ class Wav2vec_U(BaseFairseqModel):
         return probs
 
     def normalize(self, dense_x):
-
         bsz, tsz, csz = dense_x.shape
 
         if dense_x.numel() == 0:

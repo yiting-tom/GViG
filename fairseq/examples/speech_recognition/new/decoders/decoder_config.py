@@ -7,10 +7,10 @@ import math
 from dataclasses import dataclass, field
 from typing import Optional
 
-from fairseq.dataclass.configs import FairseqDataclass
-from fairseq.dataclass.constants import ChoiceEnum
 from omegaconf import MISSING
 
+from fairseq.dataclass.configs import FairseqDataclass
+from fairseq.dataclass.constants import ChoiceEnum
 
 DECODER_CHOICES = ChoiceEnum(["viterbi", "kenlm", "fairseqlm"])
 

@@ -5,9 +5,9 @@
 
 import logging
 
-from fairseq.modules.quantization import pq, quantization_options, scalar
 from omegaconf import DictConfig
 
+from fairseq.modules.quantization import pq, quantization_options, scalar
 
 logger = logging.getLogger(__name__)
 

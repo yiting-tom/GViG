@@ -15,13 +15,17 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 import editdistance
+import hydra
 import torch
 import torch.distributed as dist
+from examples.speech_recognition.new.decoders.decoder import Decoder
 from examples.speech_recognition.new.decoders.decoder_config import (
     DecoderConfig,
     FlashlightDecoderConfig,
 )
-from examples.speech_recognition.new.decoders.decoder import Decoder
+from hydra.core.config_store import ConfigStore
+from omegaconf import OmegaConf
+
 from fairseq import checkpoint_utils, distributed_utils, progress_bar, tasks, utils
 from fairseq.data.data_utils import post_process
 from fairseq.dataclass.configs import (
@@ -35,10 +39,6 @@ from fairseq.dataclass.configs import (
 from fairseq.logging.meters import StopwatchMeter, TimeMeter
 from fairseq.logging.progress_bar import BaseProgressBar
 from fairseq.models.fairseq_model import FairseqModel
-from omegaconf import OmegaConf
-
-import hydra
-from hydra.core.config_store import ConfigStore
 
 logging.root.setLevel(logging.INFO)
 logging.basicConfig(level=logging.INFO)

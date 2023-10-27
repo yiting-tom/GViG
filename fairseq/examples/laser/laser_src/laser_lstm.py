@@ -8,11 +8,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from fairseq import options, utils
-
 from fairseq.models import (
     FairseqEncoder,
-    FairseqIncrementalDecoder,
     FairseqEncoderDecoderModel,
+    FairseqIncrementalDecoder,
     register_model,
     register_model_architecture,
 )

@@ -8,8 +8,9 @@ import importlib
 import os
 from abc import ABC, abstractmethod
 
-from fairseq import registry
 from omegaconf import DictConfig
+
+from fairseq import registry
 
 
 class BaseScorer(ABC):

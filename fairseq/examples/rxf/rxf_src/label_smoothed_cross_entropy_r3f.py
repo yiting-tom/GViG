@@ -7,6 +7,7 @@ import math
 
 import torch
 import torch.nn.functional as F
+
 from fairseq import metrics, utils
 from fairseq.criterions import FairseqCriterion, register_criterion
 from fairseq.criterions.label_smoothed_cross_entropy import label_smoothed_nll_loss

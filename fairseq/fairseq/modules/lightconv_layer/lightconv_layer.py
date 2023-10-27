@@ -6,11 +6,12 @@
 import lightconv_cuda
 import torch
 import torch.nn.functional as F
+from torch import nn
+from torch.autograd import Function
+
 from fairseq import utils
 from fairseq.incremental_decoding_utils import with_incremental_state
 from fairseq.modules.fairseq_dropout import FairseqDropout
-from torch import nn
-from torch.autograd import Function
 
 
 class lightconvFunction(Function):
@@ -73,7 +74,6 @@ class LightconvLayer(nn.Module):
             nn.init.constant_(self.bias, 0.0)
 
     def forward(self, x, incremental_state=None):
-
         # during inference time, incremental BMM is faster
         if incremental_state is not None:
             T, B, C = x.size()

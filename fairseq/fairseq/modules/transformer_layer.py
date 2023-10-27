@@ -7,14 +7,13 @@ from typing import Dict, List, Optional
 
 import torch
 import torch.nn as nn
+from torch import Tensor
+
 from fairseq import utils
+from fairseq.models.transformer import TransformerConfig
 from fairseq.modules import LayerNorm, MultiheadAttention
 from fairseq.modules.fairseq_dropout import FairseqDropout
 from fairseq.modules.quant_noise import quant_noise
-from torch import Tensor
-from fairseq.models.transformer import (
-    TransformerConfig,
-)
 
 
 class TransformerEncoderLayerBase(nn.Module):
@@ -132,8 +131,7 @@ class TransformerEncoderLayerBase(nn.Module):
         # will become -inf, which results in NaN in model parameters
         if attn_mask is not None:
             attn_mask = attn_mask.masked_fill(
-                attn_mask.to(torch.bool),
-                -1e8 if x.dtype == torch.float32 else -1e4
+                attn_mask.to(torch.bool), -1e8 if x.dtype == torch.float32 else -1e4
             )
 
         residual = x
