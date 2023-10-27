@@ -169,7 +169,7 @@ class WSDMVQADataset(OFADataset):
         prev_output_item = torch.cat([self.bos_item, tgt_item])
 
         example = {
-            "id": uuid4(),
+            "id": uuid4().int,
             "source": src_item,
             "patch_image": patch_image,
             "patch_mask": patch_mask,

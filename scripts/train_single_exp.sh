@@ -72,7 +72,7 @@ train_data=${data_dir}/train-P${trainP}.csv   # train data path
 val_data=${data_dir}/test_public-P${valP}.csv # validation data path
 assert_file_exists ${train_data}
 assert_file_exists ${val_data}
-data=${train_data},${val_data}
+train_val_files=${train_data},${val_data}
 
 # Tensorboard Settings
 tensorboard_dir=${root}/tensorboard/${folder_struc}/val-P${valP} # tensorboard log path
@@ -97,7 +97,7 @@ CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES} \
     --nproc_per_node=${GPUS_PER_NODE} \
     --master_port=${MASTER_PORT} \
     ${root}/train.py \
-    $data \
+    ${train_val_files} \
     --selected-cols=${selected_cols} \
     --bpe-dir=${bpe_dir} \
     --user-dir=${user_dir} \

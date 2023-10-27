@@ -27,6 +27,9 @@ docker_rep:
 train:
 	bash ./scripts/train_single_exp.sh
 
+eval:
+	bash ./scripts/evaluate_single_exp.sh
+
 setup_env:
 	@echo "Setting up environment..."
 	pip install pip==21.2.4
