@@ -12,11 +12,15 @@ class FileDataset:
         dtypes=None,
         separator="\t",
         cached_index=False,
+        skip_header=False,
     ):
         self.file_path = file_path
         assert os.path.exists(
             self.file_path
         ), "Error: The local datafile {} not exists!".format(self.file_path)
+
+        if skip_header and open(self.file_path).readline().startswith("image"):
+            self.remove_first_line(self.file_path)
 
         self.separator = separator
         if selected_col_ids is None:
@@ -144,3 +148,11 @@ class FileDataset:
             for col_id, dtype in zip(self.selected_col_ids, self.dtypes)
         ]
         return column_l
+
+    def remove_first_line(self, filename):
+        with open(filename, 'r') as source_file, open(filename + '.tmp', 'w') as temp_file:
+            source_file.readline()  # Read and discard the first line
+            for line in source_file:
+                temp_file.write(line)
+        
+        os.replace(filename + '.tmp', filename)

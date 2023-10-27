@@ -1,11 +1,13 @@
 import logging
 import warnings
+from uuid import uuid4
 
 import numpy as np
 import torch
 from PIL import Image, ImageFile
 
 import utils.transforms as T
+from configs import paths as P
 from data import data_utils
 from data.ofa_dataset import OFADataset
 
@@ -121,44 +123,43 @@ class WSDMVQADataset(OFADataset):
             self.prompt = '这段文字" {} "描述的是哪个区域？'
 
     def __getitem__(self, index):
-        (image, width, height, left, top, right, bottom, question) = self.dataset[index]
-        uniq_id, image_path, text, region_coord = self.dataset[index]
-        uniq_id, image_path, text, region_coord = self.dataset[index]
+        (image_url, width, height, x0, y0, x1, y1, text) = self.dataset[index]
 
-        image = Image.open(image_path).convert("RGB")
-        w, h = image.size
+        # read image and convert to RGB
+        image = Image.open(P.WSDM_IMAGES_DIR / image_url.split("/")[-1]).convert("RGB")
+
+        # change to float tensor
+        width, height = int(width), int(height)
+        region = torch.tensor(tuple(map(float, [x0, y0, x1, y1])))
+        x0, y0, x1, y1 = region
+
+        # generate box target
         boxes_target = {
-            "boxes": [],
-            "labels": [],
-            "area": [],
-            "size": torch.tensor([h, w]),
+            "boxes": region[None, :] * 1,
+            "labels": np.array([0]),
+            "area": torch.tensor([(x1 - x0) * (y1 - y0)]),
+            "size": torch.tensor([height, width]),
         }
-        x0, y0, x1, y1 = region_coord.strip().split(",")
-        region = torch.tensor([float(x0), float(y0), float(x1), float(y1)])
-        boxes_target["boxes"] = torch.tensor(
-            [[float(x0), float(y0), float(x1), float(y1)]]
-        )
-        boxes_target["labels"] = np.array([0])
-        boxes_target["area"] = torch.tensor(
-            [(float(x1) - float(x0)) * (float(y1) - float(y0))]
+
+        # patch image
+        patch_image, patch_boxes = self.positioning_transform(image, boxes_target)
+
+        # resize ratio
+        resize_h, resize_w = patch_boxes["size"][0], patch_boxes["size"][1]
+
+        # patch mask
+        patch_mask = torch.tensor([True])
+
+        # quantize box coordinates
+        region_coord = "{} {} {} {} ".format(
+            *(
+                "<bin_{}>".format(
+                    int((patch_boxes["boxes"][0][i] * (self.num_bins - 1)).round())
+                )
+                for i in range(4)
+            )
         )
 
-        patch_image, patch_boxes = self.positioning_transform(image, boxes_target)
-        resize_h, resize_w = patch_boxes["size"][0], patch_boxes["size"][1]
-        patch_mask = torch.tensor([True])
-        quant_x0 = "<bin_{}>".format(
-            int((patch_boxes["boxes"][0][0] * (self.num_bins - 1)).round())
-        )
-        quant_y0 = "<bin_{}>".format(
-            int((patch_boxes["boxes"][0][1] * (self.num_bins - 1)).round())
-        )
-        quant_x1 = "<bin_{}>".format(
-            int((patch_boxes["boxes"][0][2] * (self.num_bins - 1)).round())
-        )
-        quant_y1 = "<bin_{}>".format(
-            int((patch_boxes["boxes"][0][3] * (self.num_bins - 1)).round())
-        )
-        region_coord = "{} {} {} {}".format(quant_x0, quant_y0, quant_x1, quant_y1)
         src_caption = self.pre_caption(text, self.max_src_length)
         src_item = self.encode_text(self.prompt.format(src_caption))
         tgt_item = self.encode_text(region_coord, use_bpe=False)
@@ -168,14 +169,14 @@ class WSDMVQADataset(OFADataset):
         prev_output_item = torch.cat([self.bos_item, tgt_item])
 
         example = {
-            "id": uniq_id,
+            "id": uuid4(),
             "source": src_item,
             "patch_image": patch_image,
             "patch_mask": patch_mask,
             "target": target_item,
             "prev_output_tokens": prev_output_item,
-            "w_resize_ratio": resize_w / w,
-            "h_resize_ratio": resize_h / h,
+            "w_resize_ratio": resize_w / width,
+            "h_resize_ratio": resize_h / height,
             "region_coord": region,
         }
         return example

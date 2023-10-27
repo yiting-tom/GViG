@@ -55,7 +55,14 @@ class WSDMVQATask(OFATask):
             file_path = paths[(epoch - 1) % (len(paths) - 1)]
         else:
             file_path = paths[-1]
-        dataset = FileDataset(file_path, self.cfg.selected_cols)
+
+        dataset = FileDataset(
+            file_path,
+            self.cfg.selected_cols,
+            dtypes="str,int,int,float,float,float,float,str",
+            separator=",",
+            skip_header=True,
+        )
 
         self.datasets[split] = WSDMVQADataset(
             split,

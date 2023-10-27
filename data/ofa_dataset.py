@@ -26,13 +26,19 @@ class OFADataset(FairseqDataset):
         return len(self.dataset)
 
     def encode_text(
-        self, text, length=None, append_bos=False, append_eos=False, use_bpe=True
-    ):
+        self,
+        text: str,
+        length: int | None = None,
+        append_bos: bool | None = False,
+        append_eos: bool | None = False,
+        use_bpe: bool | None = True,
+    ) -> str:
         s = self.tgt_dict.encode_line(
             line=self.bpe.encode(text) if use_bpe else text,
             add_if_not_exist=False,
             append_eos=False,
         ).long()
+
         if length is not None:
             s = s[:length]
         if append_bos:
@@ -41,7 +47,7 @@ class OFADataset(FairseqDataset):
             s = torch.cat([s, self.eos_item])
         return s
 
-    def pre_question(self, question, max_ques_words=None):
+    def pre_question(self, question: str, max_ques_words: int | None = None) -> str:
         question = (
             question.lower().lstrip(",.!?*#:;~").replace("-", " ").replace("/", " ")
         )
@@ -61,7 +67,7 @@ class OFADataset(FairseqDataset):
 
         return question
 
-    def pre_caption(self, caption, max_words=None):
+    def pre_caption(self, caption: str, max_words: int | None = None) -> str:
         caption = (
             caption.lower()
             .lstrip(",.!?*#:;~")
