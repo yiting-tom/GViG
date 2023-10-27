@@ -1,5 +1,5 @@
 """
-citerions/label_smoothed_cross_entropy.py
+criterions/label_smoothed_cross_entropy.py
 
 Copyright 2023 NCKU IKM Lab
 Author: Yi-Ting Li 

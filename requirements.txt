@@ -1,12 +1,12 @@
 --find-links https://download.pytorch.org/whl/torch_stable.html
-torch==1.12.1+cu113
-torchvision==0.13.1+cu113
+torch==1.12.1
+torchvision==0.13.1
 -e ./fairseq/
 opencv-python==4.6.0.66
 timm==0.6.11
 ftfy==6.0.3
 tensorboardX==2.4.1
-pycocotools==2.0.4
+pycocotools==2.0.7
 pycocoevalcap==1.2
 pytorch-lightning==1.8.4
 einops==0.6.0
