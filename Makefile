@@ -40,9 +40,8 @@ download_wsdm_vqa_dataset:
 	cd ./datasets; \
 	dataset_source=https://zenodo.org/records/7570356/files/; \
 	splits="train_sample test_public"; \
-	@echo "Downloading dataset..."; \
 	for split in $$splits; do \
-		wget $${dataset_source}$$split.zip?download=1 -O ./$$split.zip && unzip ./$$split.zip -d ./$$split & \
+		wget $${dataset_source}$$split.csv?download=1 -O ./$$split.csv & \
+		wget $${dataset_source}$$split.zip?download=1 -O ./$$split.zip && unzip ./$$split.zip -d ./$$split && rm ./$$split.zip & \
 	done; \
 	wait; \
-	@echo "Done."
