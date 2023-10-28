@@ -581,7 +581,7 @@ def eval_step(task, generator, models, sample, **kwargs):
         raise NotImplementedError
 
 
-def merge_results(task, cfg, logger, score_cnt, score_sum, results):
+def merge_results(task, cfg, logger, score_cnt, score_sum, results, use_csv):
     if task.cfg._name == "image_gen":
         if cfg.distributed_training.distributed_world_size > 1:
             dist.all_reduce(score_sum.data)
@@ -615,5 +615,12 @@ def merge_results(task, cfg, logger, score_cnt, score_sum, results):
             gather_results = (
                 list(chain(*gather_results)) if gather_results is not None else results
             )
-            with open(output_path, "w") as fw:
-                json.dump(gather_results, fw)
+            with open(output_path.replace(".json", ".csv"), "w") as fw:
+                if use_csv:
+                    fw.write("id,answer\n")
+                    for result in gather_results:
+                        fw.write(
+                            "{},{}\n".format(result["question_id"], result["answer"])
+                        )
+                else:
+                    json.dump(gather_results, fw)

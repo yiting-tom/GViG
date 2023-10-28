@@ -89,6 +89,14 @@ class VqaGenConfig(OFAConfig):
             "help": "generation args as JSON string for inference, only activated when --val-inference-type=beamsearch"
         },
     )
+    skip_header: Optional[bool] = field(
+        default=False,
+        metadata={"help": "skip header in csv file"},
+    )
+    separator: Optional[str] = field(
+        default="\t",
+        metadata={"help": "separator in csv file"},
+    )
 
 
 @register_task("vqa_gen", dataclass=VqaGenConfig)
@@ -125,7 +133,12 @@ class VqaGenTask(OFATask):
             table_path = paths[-1]
         else:
             table_path = paths[-1]
-        dataset = FileDataset(table_path, self.cfg.selected_cols)
+        dataset = FileDataset(
+            table_path,
+            self.cfg.selected_cols,
+            skip_header=self.cfg.skip_header,
+            separator=self.cfg.separator,
+        )
 
         self.datasets[split] = VqaGenDataset(
             split,

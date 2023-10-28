@@ -25,10 +25,13 @@ docker_rep:
 		xexanoth/rep:fix20230110-2
 
 train:
-	bash ./scripts/train_single_exp.sh
+	bash ./scripts/train_single_vg_exp.sh
 
-eval:
-	bash ./scripts/evaluate_single_exp.sh
+eval_vg:
+	bash ./scripts/evaluate_single_vg_exp.sh
+
+eval_vqa:
+	bash ./scripts/evaluate_multiple_vqa_exp.sh
 
 setup_env:
 	@echo "Setting up environment..."

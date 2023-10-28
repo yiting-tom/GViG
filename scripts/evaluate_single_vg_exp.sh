@@ -1,22 +1,7 @@
 #!/usr/bin/env bash
 
-# helper function
-assert_file_exists () {
-    if [ ! -f $1 ]; then
-        echo "File '$1' not found!"
-        exit
-    fi
-}
-
-display_exp_settings () {
-    echo -------------------------------- Experiment settings -------------------------------------
-    echo Exp tag: ${exp_tag}
-    echo Train P: ${trainP}
-    echo   Val P: ${valP}
-    echo  Test P: ${testP}
-    echo  test data: ${test_data}
-    echo ------------------------------------------------------------------------------------------
-}
+root=$(dirname "$(dirname "$(readlink -f "$0")")")
+source ${root}/scripts/helper_functions.sh
 
 # Basic Settings
 export CUDA_VISIBLE_DEVICES=0,1
@@ -40,8 +25,6 @@ beam=12
 # ================================================================================
 
 # Basic Settings
-root=$(dirname "$(dirname "$(readlink -f "$0")")")
-
 task=wsdm_vqa
 selected_cols=0,1,2,3,4,5,6,7
 
@@ -56,18 +39,21 @@ test_data=${data_dir}/test_private-P${testP}.csv
 assert_file_exists ${test_data}
 data=${test_data}
 
-# Display Experiment Settings
-display_exp_settings
-
+# Checkpoint Settings
 ckpt_dir=${root}/checkpoints/${folder_struc} # checkpoint directory path
 ckpt_path=${ckpt_dir}/${ckpt_tag}
 assert_file_exists ${ckpt_path}
 
+# Result Settings
 result_dir=${root}/results/${folder_struc}   # result directory path
 result_name=private_test-P${testP}
 
+# Display Experiment Settings
+display_exp_settings
+
 CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES} \
-    python3 -m torch.distributed.launch \
+    python3 \
+    -m torch.distributed.launch \
     --nproc_per_node=${GPUS_PER_NODE} \
     --master_port=${MASTER_PORT} \
     ${root}/evaluate.py \
@@ -85,6 +71,7 @@ CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES} \
         --max-len-a=0 \
         --max-len-b=4 \
         --no-repeat-ngram-size=3 \
+        --use-csv \
         --fp16 \
         --num-workers=0 \
         --model-overrides="{\"data\":\"${data}\",\"bpe_dir\":\"${bpe_dir}\",\"selected_cols\":\"${selected_cols}\"}"

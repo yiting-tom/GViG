@@ -1,24 +1,7 @@
 #!/bin/bash
 
-# Helper function to check if a file exists
-assert_file_exists() {
-    if [ ! -f $1 ]; then
-        echo "File '$1' not found!"
-        exit
-    fi
-}
-
-# Function to display experiment settings
-display_exp_settings() {
-    echo -------------------------------- Experiment settings -------------------------------------
-    echo Training prompt id: ${trainP}
-    echo Validation prompt id: ${valP}
-    echo Training data file path: ${train_data}
-    echo Validation data file path: ${val_data}
-    echo Checkpoint file path: ${save_path}
-    echo Log file path: ${log_path}
-    echo ------------------------------------------------------------------------------------------
-}
+root=$(dirname "$(dirname "$(readlink -f "$0")")")
+source ${root}/scripts/helper_functions.sh
 
 # Basic Settings
 export CUDA_VISIBLE_DEVICES=0,1

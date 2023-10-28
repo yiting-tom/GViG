@@ -150,9 +150,11 @@ class FileDataset:
         return column_l
 
     def remove_first_line(self, filename):
-        with open(filename, 'r') as source_file, open(filename + '.tmp', 'w') as temp_file:
+        with open(filename, "r") as source_file, open(
+            filename + ".tmp", "w"
+        ) as temp_file:
             source_file.readline()  # Read and discard the first line
             for line in source_file:
                 temp_file.write(line)
-        
-        os.replace(filename + '.tmp', filename)
+
+        os.replace(filename + ".tmp", filename)

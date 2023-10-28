@@ -144,11 +144,25 @@ def main(cfg: DictConfig, **kwargs):
         score_cnt += len(scores) if scores is not None else 0
         progress.log({"sentences": sample["nsentences"]})
 
-    merge_results(task, cfg, logger, score_cnt, score_sum, results)
+    merge_results(
+        task,
+        cfg,
+        logger,
+        score_cnt,
+        score_sum,
+        results,
+        use_csv="use_csv" in kwargs and kwargs["use_csv"],
+    )
 
 
 def cli_main():
     parser = options.get_generation_parser()
+    parser.add_argument(
+        "--use-csv",
+        action="store_true",
+        help="Use CSV format for output.",
+        default=True,
+    )
     parser.add_argument(
         "--ema-eval", action="store_true", help="Use EMA weights to make evaluation."
     )
@@ -160,12 +174,14 @@ def cli_main():
     parser.add_argument("--zero-shot", action="store_true")
     args = options.parse_args_and_arch(parser)
     cfg = convert_namespace_to_omegaconf(args)
+
     distributed_utils.call_main(
         cfg,
         main,
         ema_eval=args.ema_eval,
         beam_search_vqa_eval=args.beam_search_vqa_eval,
         zero_shot=args.zero_shot,
+        use_csv=args.use_csv,
     )
 
 

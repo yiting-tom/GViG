@@ -1,6 +1,7 @@
 import base64
 import logging
 import warnings
+from uuid import uuid4
 from io import BytesIO
 
 import numpy as np
@@ -8,6 +9,7 @@ import torch
 from PIL import Image, ImageFile
 from torchvision import transforms
 
+from configs import paths as P
 from data import data_utils
 from data.ofa_dataset import OFADataset
 
@@ -146,12 +148,25 @@ class VqaGenDataset(OFADataset):
 
     def __getitem__(self, index):
         item = self.dataset[index]
-        if len(item) == 5:
-            uniq_id, image, question, ref, predict_objects = item
-        else:
-            uniq_id, image, question, ref, predict_objects, caption = item
 
-        image = Image.open(BytesIO(base64.urlsafe_b64decode(image)))
+        # using the WSDM 2023 Toloka VQA dataset format
+        if len(item) == 8:
+            image_url, width, height, left, top, right, bottom, question = item
+            # read image and convert to RGB
+            image = Image.open(P.WSDM_IMAGES_DIR / image_url.split("/")[-1]).convert(
+                "RGB"
+            )
+            uniq_id = uuid4().int
+            ref = "1|!+yes&&0|!+no"
+            predict_objects = None
+        else:
+            if len(item) == 5:
+                uniq_id, image, question, ref, predict_objects = item
+            else:
+                uniq_id, image, question, ref, predict_objects, caption = item
+
+            image = Image.open(BytesIO(base64.urlsafe_b64decode(image)))
+
         patch_image = self.patch_resize_transform(image)
         patch_mask = torch.tensor([True])
 
