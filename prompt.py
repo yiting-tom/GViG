@@ -1,5 +1,5 @@
 import logging
-from typing import Optional
+from pathlib import Path
 
 import pandas as pd
 
@@ -50,6 +50,7 @@ def generate_prompt(
     raw_df.drop(columns=list(answer_files.keys()), inplace=True)
 
     # Save prompt
+    Path(output_file).parent.mkdir(exist_ok=True, parents=True)
     raw_df.to_csv(output_file, index=False)
     logging.info(f"Save prompt to `{output_file}` ... Done")
 
@@ -67,7 +68,7 @@ def main_cli():
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--raw_file", type=str, default=raw_file, help="raw file")
+    parser.add_argument("--raw_file", type=str, help="raw file")
     parser.add_argument(
         "--answer_files",
         type=str,
@@ -82,7 +83,7 @@ def main_cli():
     )
     parser.add_argument(
         "--output_file",
-        type=Optional[str],
+        type=str,
         help="default is: {raw_file}-P{prompt_name}.csv",
     )
     args = parser.parse_args()

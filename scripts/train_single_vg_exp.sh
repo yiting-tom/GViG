@@ -10,18 +10,18 @@ export MASTER_PORT=6033
 export GPUS_PER_NODE=2
 
 # Experiment Settings
-exp_tag=sample 		# experiment tag
-arch=tiny    		# model architecture(define in pretrained_weights folder, e.g. huge, large, base, medium, base, tiny)
-trainP=1     		# training prompt id
-valP=1       		# validation prompt id
+exp_tag=example 		# experiment tag
+arch=tiny    		    # model architecture(define in pretrained_weights folder, e.g. huge, large, base, medium, base, tiny)
+trainP=Instruct-2       # training prompt id
+valP=Base    		    # validation prompt id
 
 # Hyperparameter Settings
 criterion=adjust_label_smoothed_cross_entropy
 label_smoothing=0.1
 lr=3e-5
-max_epoch=4
+max_epoch=1
 warmup_ratio=0.06
-batch_size=1
+batch_size=4
 update_freq=1
 resnet_drop_path_rate=0.0
 encoder_drop_path_rate=0.2
@@ -38,8 +38,6 @@ patch_image_size=512
 # ================================================================================
 
 # Basic Settings
-root=$(dirname "$(dirname "$(readlink -f "$0")")")
-
 task=wsdm_vqa
 selected_cols=0,1,2,3,4,5,6,7
 

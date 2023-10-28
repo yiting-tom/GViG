@@ -10,7 +10,7 @@ export LOCAL_RANK=0
 export MASTER_PORT=6033
 
 # Experiment Settings
-exp_tag=sample 		# experiment tag
+exp_tag=official 		# experiment tag
 arch=tiny    		# model architecture(define in pretrained_weights folder, e.g. huge, large, base, medium, base, tiny)
 ckpt_path=${root}/pretrained_weights/ofa_${arch}.pt
 trainP=1     		# training prompt id

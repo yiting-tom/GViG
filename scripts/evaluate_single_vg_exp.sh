@@ -10,12 +10,12 @@ export MASTER_PORT=6033
 export GPUS_PER_NODE=2
 
 # Experiment Settings
-exp_tag=sample 		# experiment tag
+exp_tag=example 		# experiment tag
 ckpt_tag=checkpoint_best.pt
 arch=tiny    		# model architecture(define in pretrained_weights folder, e.g. huge, large, base, medium, base, tiny)
-trainP=1     		# training prompt id
-valP=1       		# validation prompt id
-testP=1             # test prompt id
+trainP=Instruct-2   # training prompt id
+valP=Base      		# validation prompt id
+testP=Instruct-2    # test prompt id
 
 batch_size=64
 beam=12
