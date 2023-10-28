@@ -8,6 +8,18 @@ The typical structure of the `results` directory is as follows:
 
 ```bash
 results/
+│── vqa
+│  └── [arch_1]
+│  │  │── [exp_tag_1]
+│  │  │  │── test_private.csv
+│  │  │  │── test_public.csv
+│  │  │  │── train.csv
+│  │  │  └── ...
+│  │  │── [exp_tag_2]
+│  │  │── ...
+│  │  └── [exp_tag_n]
+│  │── ...
+│  └── [arch_n]
 │── [arch_1]
 │  │── [exp_tag_1]
 │  │  │── train-P[training_prompt_id_1]
@@ -24,7 +36,7 @@ results/
 ```
 
 ## Description of Structure
-
+- vqa: Represents the directory for storing the results of the VQA model.
 - [arch_n]: Represents the architecture of the model.
 - [exp_tag_n]: Represents the tag of the experiment.
 - train-P[training_prompt_id_n]: Represents the directory for a specific training prompt ID.
