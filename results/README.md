@@ -32,4 +32,4 @@ results/
 
 ## Usage
 
-The structure of the results directory is defined by the scripts/train_single_exp.sh or scripts/train_multiple_exps.sh. To modify the structure or the content of the results, you can adjust these scripts according to your needs.
+The structure of the results directory is defined by the [`scripts/train_single_exp.sh`](../scripts/train_single_vg_exp.sh). To modify the structure or the content of the results, you can adjust these scripts according to your needs.
