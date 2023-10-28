@@ -1,13 +1,11 @@
-# %%
-from typing import Optional
 import logging
+from typing import Optional
 
 import pandas as pd
+
 from configs import consts as C
 
 L: logging.Logger = logging.getLogger(logging.basicConfig(level=logging.INFO))
-
-# %%
 
 PROMPT_TEMPLATES = {
     "Base": "{question}",
@@ -19,15 +17,7 @@ PROMPT_TEMPLATES = {
     "Instruct-3": "question: {question} hint: {ofa_huge} . {ofa_large} . {ofa_medium}",
 }
 
-# %%
-raw_file = "/home/P76104419/GViG/datasets/official/train_sample.csv"
-answer_files = {
-    "ofa_huge": "/home/P76104419/GViG/results/vqa/tiny/sample/train_sample.csv",
-    "ofa_large": "/home/P76104419/GViG/results/vqa/tiny/sample/train_sample.csv",
-}
 
-
-# %%
 def generate_prompt(
     raw_file: str,
     answer_files: dict,

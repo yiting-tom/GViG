@@ -447,9 +447,9 @@ def hydra_main(cfg: InferConfig) -> Union[float, Tuple[float, Optional[float]]]:
 
 def cli_main() -> None:
     try:
-        from hydra._internal.utils import (
+        from hydra._internal.utils import (  # pylint: disable=import-outside-toplevel
             get_args,
-        )  # pylint: disable=import-outside-toplevel
+        )
 
         cfg_name = get_args().config_name or "infer"
     except ImportError:

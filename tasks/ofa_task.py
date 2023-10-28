@@ -202,9 +202,9 @@ class OFATask(FairseqTask):
                 compute_alignment=getattr(args, "print_alignment", False),
             )
 
-        from fairseq.sequence_generator import (
+        from fairseq.sequence_generator import (  # SequenceGenerator,
             SequenceGeneratorWithAlignment,
-        )  # SequenceGenerator,
+        )
         from models.sequence_generator import SequenceGenerator
 
         # Choose search strategy. Defaults to Beam Search.

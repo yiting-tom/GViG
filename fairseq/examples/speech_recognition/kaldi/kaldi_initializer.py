@@ -680,9 +680,9 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
     try:
-        from hydra._internal.utils import (
+        from hydra._internal.utils import (  # pylint: disable=import-outside-toplevel
             get_args,
-        )  # pylint: disable=import-outside-toplevel
+        )
 
         cfg_name = get_args().config_name or "kaldi_initializer"
     except ImportError:

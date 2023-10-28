@@ -1,8 +1,8 @@
 import base64
 import logging
 import warnings
-from uuid import uuid4
 from io import BytesIO
+from uuid import uuid4
 
 import numpy as np
 import torch
