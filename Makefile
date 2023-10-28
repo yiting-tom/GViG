@@ -33,6 +33,9 @@ eval_vg:
 eval_vqa:
 	bash ./scripts/evaluate_multiple_vqa_exp.sh
 
+gen_prompt_data:
+	bash ./scripts/generate_prompt_data.sh
+
 setup_env:
 	@echo "Setting up environment..."
 	pip install pip==21.2.4

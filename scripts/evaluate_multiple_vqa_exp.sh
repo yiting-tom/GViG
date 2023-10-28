@@ -31,8 +31,6 @@ batch_size=128
 
 # Basic Settings
 task=vqa_gen
-# id, base64, question, answer, objectLabels
-# image, question
 separator=,
 selected_cols=0,4
 

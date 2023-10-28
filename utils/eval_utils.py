@@ -10,6 +10,7 @@ import torch.distributed as dist
 from data import data_utils
 from fairseq import utils
 from tasks.nlg_tasks.gigaword import fix_tokenization
+from utils.get_iou import official_get_iou_func
 
 
 def get_symbols_to_strip_from_output(generator):
@@ -240,58 +241,6 @@ def eval_refcoco(task, generator, models, sample, **kwargs):
 
 
 def eval_wsdm_vqa(task, generator, models, sample, **kwargs):
-    def official_get_iou_func(bb1, bb2):
-        # Taken from the official WSDM 2023 Toloka VQA challenge repo:
-        #   https://github.com/Toloka/WSDMCup2023/blob/main/reproduction/run.py#L16
-        """
-        Calculate the Intersection over Union (IoU) of two bounding boxes.
-
-        Parameters
-        ----------
-        bb1 : dict
-            Keys: {'x1', 'x2', 'y1', 'y2'}
-            The (x1, y1) position is at the top left corner,
-            the (x2, y2) position is at the bottom right corner
-        bb2 : dict
-            Keys: {'x1', 'x2', 'y1', 'y2'}
-            The (x, y) position is at the top left corner,
-            the (x2, y2) position is at the bottom right corner
-
-        Returns
-        -------
-        float
-            in [0, 1]
-        """
-        assert bb1["x1"] < bb1["x2"], "x1: {}, x2: {}".format(bb1["x1"], bb1["x2"])
-        assert bb1["y1"] < bb1["y2"], "y1: {}, y2: {}".format(bb1["y1"], bb1["y2"])
-        assert bb2["x1"] < bb2["x2"], "x1: {}, x2: {}".format(bb2["x1"], bb2["x2"])
-        assert bb2["y1"] < bb2["y2"], "y1: {}, y2: {}".format(bb2["y1"], bb2["y2"])
-
-        # determine the coordinates of the intersection rectangle
-        x_left = max(bb1["x1"], bb2["x1"])
-        y_top = max(bb1["y1"], bb2["y1"])
-        x_right = min(bb1["x2"], bb2["x2"])
-        y_bottom = min(bb1["y2"], bb2["y2"])
-
-        if x_right < x_left or y_bottom < y_top:
-            return 0.0
-
-        # The intersection of two axis-aligned bounding boxes is always an
-        # axis-aligned bounding box
-        intersection_area = (x_right - x_left) * (y_bottom - y_top)
-
-        # compute the area of both AABBs
-        bb1_area = (bb1["x2"] - bb1["x1"]) * (bb1["y2"] - bb1["y1"])
-        bb2_area = (bb2["x2"] - bb2["x1"]) * (bb2["y2"] - bb2["y1"])
-
-        # compute the intersection over union by taking the intersection
-        # area and dividing it by the sum of prediction + ground-truth
-        # areas - the interesection area
-        iou = intersection_area / float(bb1_area + bb2_area - intersection_area)
-        assert iou >= 0.0
-        assert iou <= 1.0
-        return iou
-
     def _calculate_iou_scores(hyps, refs):
         iou_scores = []
         for i in range(hyps.size(0)):
@@ -615,12 +564,16 @@ def merge_results(task, cfg, logger, score_cnt, score_sum, results, use_csv):
             gather_results = (
                 list(chain(*gather_results)) if gather_results is not None else results
             )
-            with open(output_path.replace(".json", ".csv"), "w") as fw:
-                if use_csv:
-                    fw.write("id,answer\n")
-                    for result in gather_results:
-                        fw.write(
-                            "{},{}\n".format(result["question_id"], result["answer"])
-                        )
-                else:
-                    json.dump(gather_results, fw)
+
+            from pandas import DataFrame
+
+            df = DataFrame(gather_results)
+            output_path = (
+                output_path.replace(".json", ".csv") if use_csv else output_path
+            )
+
+            if use_csv:
+                df.to_csv(output_path, index=False, header=False)
+                return
+
+            df.to_json(output_path, orient="records")

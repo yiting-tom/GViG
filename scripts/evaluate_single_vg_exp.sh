@@ -26,6 +26,7 @@ beam=12
 
 # Basic Settings
 task=wsdm_vqa
+separator=,
 selected_cols=0,1,2,3,4,5,6,7
 
 # Path Settings
