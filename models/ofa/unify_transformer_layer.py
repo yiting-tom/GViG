@@ -1,20 +1,19 @@
 import math
 from typing import Dict, List, Optional
 
+import numpy as np
 import torch
 import torch.nn as nn
 from torch import Tensor
 
+from configs import consts as C
+from configs import paths as P
 from fairseq import utils
 from fairseq.modules import LayerNorm
 from fairseq.modules.fairseq_dropout import FairseqDropout
 from fairseq.modules.quant_noise import quant_noise
 
 from .unify_multihead_attention import MultiheadAttention
-
-from configs import paths as P
-from configs import consts as C
-import numpy as np
 
 RECORD_ATTN = True
 ATTN_RECORD = []

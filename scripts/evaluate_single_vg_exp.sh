@@ -18,6 +18,7 @@ valP=Base      		# validation prompt id
 testP=Instruct-2    # test prompt id
 
 batch_size=1
+seed=7
 beam=1
 
 # ================================================================================
@@ -63,11 +64,11 @@ CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES} \
         --user-dir=${user_dir} \
         --task=${task} \
         --batch-size=${batch_size} \
-        --log-format=simple --log-interval=10 \
-        --seed=7 \
+        --seed=${seed} \
         --gen-subset=${result_name} \
         --results-path=${result_dir} \
         --beam=${beam} \
+        --log-format=simple --log-interval=10 \
         --min-len=4 \
         --max-len-a=0 \
         --max-len-b=4 \

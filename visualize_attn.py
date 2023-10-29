@@ -1,13 +1,14 @@
 # %%
-import torch
+from functools import partial
+
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import torch
 from matplotlib.patches import Rectangle
 from PIL import Image
-from functools import partial
 
 from configs import consts as C
 from configs import paths as P
@@ -15,7 +16,6 @@ from data.ofa_dataset import OFADataset
 from fairseq.data.dictionary import Dictionary
 from fairseq.data.encoders.gpt2_bpe import GPT2BPE, GPT2BPEConfig
 from utils import img_fmt as IF
-
 
 # %%
 row_id = 1
