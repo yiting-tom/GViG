@@ -47,7 +47,8 @@ class OFADataset(FairseqDataset):
             s = torch.cat([s, self.eos_item])
         return s
 
-    def pre_question(self, question: str, max_ques_words: int | None = None) -> str:
+    @staticmethod
+    def pre_question(question: str, max_ques_words: int | None = None) -> str:
         question = (
             question.lower().lstrip(",.!?*#:;~").replace("-", " ").replace("/", " ")
         )
@@ -67,7 +68,8 @@ class OFADataset(FairseqDataset):
 
         return question
 
-    def pre_caption(self, caption: str, max_words: int | None = None) -> str:
+    @staticmethod
+    def pre_caption(caption: str, max_words: int | None = None) -> str:
         caption = (
             caption.lower()
             .lstrip(",.!?*#:;~")

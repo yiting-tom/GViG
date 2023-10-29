@@ -2,13 +2,7 @@ import logging
 import re
 import unicodedata
 
-from pandarallel import pandarallel
-
-pandarallel.initialize(progress_bar=True)
-
 import pandas as pd
-
-from configs import consts, paths
 
 L: logging.Logger = logging.getLogger(logging.basicConfig(level=logging.INFO))
 
@@ -62,19 +56,3 @@ def reformat_question(q: str) -> str:
     q = q.capitalize()
 
     return q
-
-
-def df_format_question(df: pd.DataFrame) -> pd.DataFrame:
-    df["question"] = df["question"].parallel_apply(reformat_question)
-    return df
-
-
-def df_columns_vg_format(df: pd.DataFrame) -> pd.DataFrame:
-    if "text" not in df.columns:
-        df["text"] = df["question"]
-        df.drop("question", errors="ignore", inplace=True)
-    if "unique_id" not in df.columns:
-        df["unique_id"] = df.index
-    if "image_id" not in df.columns:
-        df["image_id"] = df.index
-    return df[consts.VG_COLUMNS]

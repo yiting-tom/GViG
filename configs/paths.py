@@ -2,6 +2,8 @@ from pathlib import Path
 
 ROOT: Path = Path(__file__).parent.parent
 DATASETS_DIR: Path = ROOT / "datasets"
+IMAGESS_DIR: Path = ROOT / "datasets" / "images"
+RESULTS_DIR: Path = ROOT / "results"
 
 # The directory where the WSDM dataset is stored
 WSDM_CSV_DIR: Path = DATASETS_DIR / "official"

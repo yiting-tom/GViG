@@ -4,10 +4,10 @@ root=$(dirname "$(dirname "$(readlink -f "$0")")")
 source ${root}/scripts/helper_functions.sh
 
 # Basic Settings
-export CUDA_VISIBLE_DEVICES=0,1
+export CUDA_VISIBLE_DEVICES=0
 export LOCAL_RANK=0
 export MASTER_PORT=6033
-export GPUS_PER_NODE=2
+export GPUS_PER_NODE=1
 
 # Experiment Settings
 exp_tag=example 		# experiment tag
@@ -17,8 +17,8 @@ trainP=Instruct-2   # training prompt id
 valP=Base      		# validation prompt id
 testP=Instruct-2    # test prompt id
 
-batch_size=64
-beam=12
+batch_size=1
+beam=1
 
 # ================================================================================
 # Please do not change the settings below

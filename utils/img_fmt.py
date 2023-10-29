@@ -18,6 +18,14 @@ def url_to_base64(url: str, file_dir: Path):
         raise FileNotFoundError(f"{filepath} does not exist")
 
 
+def filepath_to_pil_image(filepath: Union[str, Path]) -> Image:
+    return Image.open(filepath)
+
+
+def filepath_to_np_array(filepath: Union[str, Path]) -> np.ndarray:
+    return cv2.imread(filepath)[:, :, ::-1]
+
+
 def filepath_to_base64(filepath: Union[str, Path]) -> str:
     img = Image.open(filepath)  # path to file
     img_buffer = BytesIO()

@@ -165,6 +165,7 @@ class WSDMVQADataset(OFADataset):
         tgt_item = self.encode_text(region_coord, use_bpe=False)
 
         src_item = torch.cat([self.bos_item, src_item, self.eos_item])
+        raise ValueError(self.bos_item, src_item, self.eos_item)
         target_item = torch.cat([tgt_item, self.eos_item])
         prev_output_item = torch.cat([self.bos_item, tgt_item])
 

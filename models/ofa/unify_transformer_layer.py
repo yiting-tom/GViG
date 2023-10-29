@@ -12,6 +12,15 @@ from fairseq.modules.quant_noise import quant_noise
 
 from .unify_multihead_attention import MultiheadAttention
 
+from configs import paths as P
+from configs import consts as C
+import numpy as np
+
+RECORD_ATTN = True
+ATTN_RECORD = []
+ATTN_RECORD_NAME = 0
+exp_tag = "example"
+
 
 def drop_path(x, drop_prob: float = 0.0, training: bool = False):
     """
@@ -274,6 +283,37 @@ class TransformerEncoderLayer(nn.Module):
         residual = x
         if self.normalize_before:
             x = self.self_attn_layer_norm(x)
+
+        if RECORD_ATTN:
+            global ATTN_RECORD
+            global ATTN_RECORD_NAME
+            global exp_tag
+            arch = "tiny"
+            exp_tag = "example"
+            trainP = "Instruct-2"
+            valP = "Base"
+            testP = "Instruct-2"
+            ATTN_RECORD.append(x.detach().cpu().numpy())
+            target_dir = (
+                P.ROOT
+                / "results"
+                / "attn"
+                / arch
+                / exp_tag
+                / f"train-P{trainP}"
+                / f"val-P{valP}"
+                / f"test-P{testP}"
+            )
+            target_dir.mkdir(parents=True, exist_ok=True)
+            total_layer = C.OFA_ARCH_ENC_LAYERS_MAPPING[arch]
+            if len(ATTN_RECORD) == total_layer:
+                np.save(
+                    target_dir / f"attn_record-{ATTN_RECORD_NAME//total_layer}.npy",
+                    ATTN_RECORD,
+                )
+                ATTN_RECORD = []
+            ATTN_RECORD_NAME += 1
+
         x, _ = self.self_attn(
             query=x,
             key=x,
