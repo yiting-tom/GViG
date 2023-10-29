@@ -75,7 +75,7 @@ After generate the prompt tuning data, we can train the VG model. The VG model i
 ```bash
 make train
 ```
-Ths command will execute the file [`scripts/train_single_vg_exp.sh`](scripts/train_single_vg_exp.sh), so you can modify the file to change all the variables. After training, the model will be saved in the `checkpoints/<model_arch>/<exp_tag>/train-P<prompt_name>/val-P<prompt_name>` directory.
+Ths command will execute the file [`scripts/train_single_vg_exp.sh`](scripts/train_single_vg_exp.sh), so you can modify the file to change all the variables. After training, the model will be saved in the `checkpoints/<model_arch>/<exp_tag>/train-P<prompt_name>/val-P<prompt_name>` directory. More details please refer to [checkpoints/README.md](checkpoints/README.md).
 
 ### Inference
 
@@ -83,6 +83,6 @@ After training the VG model, we can inference the model on the test set. The inf
 ```bash
 make eval_vg
 ```
-This command will execute the file [`scripts/evaluate_single_vg_exp.sh`](scripts/evaluate_single_vg_exp.sh), so you can modify the file to change the `model arch`, `exp tag`, `checkpoint path`, `train prompt`, `val prompt`, `test prompt`, `test files`, `seed`, `beam`, `batch_size` and more.
+This command will execute the file [`scripts/evaluate_single_vg_exp.sh`](scripts/evaluate_single_vg_exp.sh), so you can modify the file to change the `model arch`, `exp tag`, `checkpoint path`, `train prompt`, `val prompt`, `test prompt`, `test files`, `seed`, `beam`, `batch_size` and more. More details please refer to [results/README.md](results/README.md).
 
 That's all! Have fun! 🥳.
